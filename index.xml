@@ -6,9 +6,22 @@
     <description>Recent content on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <lastBuildDate>Mon, 13 Apr 2020 20:14:27 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>https://wachulec.me/about/</link>
+      <pubDate>Mon, 13 Apr 2020 20:14:27 +0200</pubDate>
+      
+      <guid>https://wachulec.me/about/</guid>
+      <description>Hi! My name is Piotr. Let me tell you something about me.
+
+Technically Currently C#/.NET developer with about 2 years of commercial experience in these technologies. Also associated with Microsoft Azure cloud for two years (I passed AZ-900 exam). Most projects used:
+ .NET Core 2.1+ Azure App Service Azure SQL Database Azure Functions Storage Account Cosmos DB VMs SignalR Logic Apps Azure AD/Graph API Key Vault  I have experience also with other Azure services.</description>
+    </item>
     
   </channel>
 </rss>

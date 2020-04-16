@@ -3,11 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://wachulec.me/categories/</loc>
+    <loc>https://wachulec.me/about/</loc>
+    <lastmod>2020-04-16T07:47:56+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://wachulec.me/</loc>
+    <lastmod>2020-04-16T07:47:56+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/categories/</loc>
   </url>
   
   <url>
