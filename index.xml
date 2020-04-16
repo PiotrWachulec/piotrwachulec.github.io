@@ -6,10 +6,19 @@
     <description>Recent content on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 13 Apr 2020 20:14:27 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2020 07:53:12 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Contact</title>
+      <link>https://wachulec.me/contact/</link>
+      <pubDate>Thu, 16 Apr 2020 07:53:12 +0200</pubDate>
+      
+      <guid>https://wachulec.me/contact/</guid>
+      <description>You can contact with me by writing an email: p.wachulec (at) gmail.com or by social media. All of my socials you can find on main page or on my profile on SocialsHub.</description>
+    </item>
     
     <item>
       <title>About</title>
