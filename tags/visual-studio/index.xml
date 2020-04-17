@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>visual studio on Piotr Wachulec</title>
+    <link>https://wachulec.me/tags/visual-studio/</link>
+    <description>Recent content in visual studio on Piotr Wachulec</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 17 Apr 2020 10:23:10 +0200</lastBuildDate>
+    
+	<atom:link href="https://wachulec.me/tags/visual-studio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Live Unit Testing with .NET and Visual Studio</title>
+      <link>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</link>
+      <pubDate>Fri, 17 Apr 2020 10:23:10 +0200</pubDate>
+      
+      <guid>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</guid>
+      <description>A few days ago I was looking for something related to unit tests in the Microsoft documentation. I came to the tab titled &amp;lsquo;Live unit testing&amp;rsquo; and I decided to check what is it. It is quite interesting, because why I have to click to run unit tests when I made small changes in code? We have the live reload functionality in frontend or some mobile technologies to see changes in the interface, so the developer don&amp;rsquo;t have manually click F5 to refresh the page.</description>
+    </item>
+    
+  </channel>
+</rss>

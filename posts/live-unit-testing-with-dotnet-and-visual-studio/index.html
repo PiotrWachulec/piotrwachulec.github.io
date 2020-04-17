@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Piotr Wachulec">
+    <meta name="description" content="Piotr Wachulec&#39;s personal website">
+    <meta name="keywords" content="blog,developer,architect,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Live Unit Testing with .NET and Visual Studio"/>
+<meta name="twitter:description" content="Running unit tests manually after each small change can be annoying. Visual Studio gives developers the possibility to set up live reloading of tests after saving changes."/>
+
+    <meta property="og:title" content="Live Unit Testing with .NET and Visual Studio" />
+<meta property="og:description" content="Running unit tests manually after each small change can be annoying. Visual Studio gives developers the possibility to set up live reloading of tests after saving changes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/" />
+<meta property="article:published_time" content="2020-04-17T10:23:10+02:00" />
+<meta property="article:modified_time" content="2020-04-17T13:38:48+02:00" />
+
+
+    
+      <base href="https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/">
+    
+    <title>
+  Live Unit Testing with .NET and Visual Studio · Piotr Wachulec
+</title>
+
+    
+      <link rel="canonical" href="https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://wachulec.me/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="https://wachulec.me/css/coder-dark.min.83a2010dac9f59f943b3004cd6c4f230507ad036da635d3621401d42ec4e2835.css" integrity="sha256-g6IBDayfWflDswBM1sTyMFB60DbaY102IUAdQuxOKDU=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.69.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="colorscheme-dark">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://wachulec.me/">
+      Piotr Wachulec
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Live Unit Testing with .NET and Visual Studio</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-04-17T10:23:10&#43;02:00'>
+                April 17, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              4-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://wachulec.me/categories/c#-.net/">C# .NET</a></div>
+
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://wachulec.me/tags/.net/">.net</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/.net-core/">.net core</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/visual-studio/">visual studio</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/unit-tests/">unit tests</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>A few days ago I was looking for something related to unit tests in the Microsoft documentation. I came to the tab titled &lsquo;Live unit testing&rsquo; and I decided to check what is it. It is quite interesting, because why I have to click to run unit tests when I made small changes in code? We have the live reload functionality in frontend or some mobile technologies to see changes in the interface, so the developer don&rsquo;t have manually click <em>F5</em> to refresh the page. The same situation is on backend side. When I&rsquo;m working on changes in business logic I want to have continuous response that my changes don&rsquo;t break other parts of service.</p>
+<h1 id="first-drawback">First drawback</h1>
+<p>Excited I began to delve into this part of the documentation, but my excitement did not last too long. It turned out that this functionality is available only in Visual Studio <strong>Enterprise</strong>&hellip; (offtop) To be honest for several weeks I use a different IDE - <a href="https://www.jetbrains.com/rider/">Rider</a>.</p>
+<h1 id="demo">Demo</h1>
+<p>After virtual machine creation I started to prepare some demo codes. I created <strong>FooProject</strong> console app in .NET Core 3.1 with class <strong>BarService</strong> and <strong>FooProject.UnitTests</strong> NUnit Test project. I defined in <strong>BarService</strong> method which will check if string pushed into method is a palindrome.</p>
+<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/solution_explorer.png" alt="Solution explorer" /></p>
+<p>Then I created a couple of tests (I added FluentAssertion package - thanks to this package assertions are more readable, I can recommend it!).</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> FluentAssertions;
+<span style="color:#66d9ef">using</span> FooService;
+<span style="color:#66d9ef">using</span> NUnit.Framework;
+
+<span style="color:#66d9ef">namespace</span> FooProject.UnitTests
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BarServiceTests</span>
+    {
+<span style="color:#a6e22e">        [TestCase(&#34;Sore was I ere I saw Eros.&#34;, true)]</span>
+<span style="color:#a6e22e">        [TestCase(&#34;Sore was I ere I saw Eros.   &#34;, true)]</span>
+<span style="color:#a6e22e">        [TestCase(&#34;   Sore was I ere I saw Eros.&#34;, true)]</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> StringIsPalindrom_ReturnsAsDefinedInCases(<span style="color:#66d9ef">string</span> stringToTest, <span style="color:#66d9ef">bool</span> expectedResult)
+        {
+            BarService barService = <span style="color:#66d9ef">new</span> BarService();
+
+            <span style="color:#66d9ef">bool</span> result = barService.StringIsPalindrom(stringToTest);
+            result.Should().Be(expectedResult);
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="live-reload-in-action">Live reload in action</h1>
+<p>Let&rsquo;s start work. Live Unit Testing Window you can find in Test menu.</p>
+<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/test_menu.png" alt="Test menu" /></p>
+<p>When you click Play button the solution will be checked and VS will find tests. For now I don&rsquo;t have any implementation of <em>StringIsPalindrom</em> method, so all of my tests failed.</p>
+<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/tests_all_fails.png" alt="All test failed" /></p>
+<p>Below you can find screencast with filled <em>StringIsPalindrom</em> method. When I comment one line (and due to this two of three test failed) and I clicked <strong>Ctrl + S</strong> tests were reloaded. What is more on the right side of code you have marked which line of codes are covered by tests and information if tests passed or failed.</p>
+<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/live_tests.gif" alt="Live tests" /></p>
+<h1 id="configuration-and-other-restrictions">Configuration and other restrictions</h1>
+<p>We saw that it so interesting feature, but you have to have an enterprise licence for VS. Another restricion is minimal version test libraries. In my case NUnit has to be at least 3.5.0.</p>
+<p>There are a lot of possibilities of configuration. For example you can restrict number of processes which are generated by live reload or turn off live unit testing when your battery is low. What is more if you have many of tests in project and you don&rsquo;t want to check all of them in live reload you can exclude selected tests or all of tests from project. More information in details you can find in <a href="https://docs.microsoft.com/en-us/visualstudio/test/live-unit-testing?view=vs-2019">docs</a>.</p>
+<h3 id="newsletter">Newsletter</h3>
+<p>Thank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it. If you want to be informed about my next entries or occasionally get a message with a collection of some interesting links, please subscribe to my newsletter. I will be extremely pleased if you do this and join my community!</p>
+
+<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{clear:left; font:14px Helvetica,Arial,sans-serif; }
+	 
+</style>
+<style type="text/css">
+	#mc-embedded-subscribe-form input[type=checkbox]{display: inline; width: auto;margin-right: 10px;}
+	#mergeRow-gdpr {margin-top: 20px;}
+	#mergeRow-gdpr fieldset label {font-weight: normal;}
+	#mc-embedded-subscribe-form .mc_fieldset{border:none;min-height: 0px;padding-bottom:0px;}
+</style>
+<div id="mc_embed_signup">
+<form action="https://wachulec.us4.list-manage.com/subscribe/post?u=2324c62a24ba49bf4fe638e7a&amp;id=d8fba7ef5c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+<div class="mc-field-group">
+	<label for="mce-FNAME">First Name  <span class="asterisk">*</span>
+</label>
+	<input type="text" value="" name="FNAME" class="required" id="mce-FNAME">
+</div>
+<div id="mergeRow-gdpr" class="mergeRow gdpr-mergeRow content__gdprBlock mc-field-group">
+    <div class="content__gdpr">
+        <label>GDPR Permissions</label>
+        <p>Please select below markup. Thanks to this you agree to send you news from my blog, about my products and services. Above data are stored in Mailchimp and I do not share them to anyone.</p>
+        <fieldset class="mc_fieldset gdprRequired mc-field-group" name="interestgroup_field">
+		<label class="checkbox subfield" for="gdpr_43552"><input type="checkbox" id="gdpr_43552" name="gdpr[43552]" value="Y" class="av-checkbox "><span>Send me emails!</span> </label>
+        </fieldset>
+        <p>You can unsubscribe at any time by clicking the link in the footer of our emails. For information about our privacy practices, please visit our website.</p>
+    </div>
+    <div class="content__gdprLegal">
+        <p>We use Mailchimp as our marketing platform. By clicking below to subscribe, you acknowledge that your information will be transferred to Mailchimp for processing. <a href="https://mailchimp.com/legal/" target="_blank">Learn more about Mailchimp's privacy practices here.</a></p>
+    </div>
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2324c62a24ba49bf4fe638e7a_d8fba7ef5c" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "wachulec-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>I will help you SOLVE YOUR PROBLEM.</p>
+      
+      
+        ©
+        
+        2020
+         Piotr Wachulec 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-163491252-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>
