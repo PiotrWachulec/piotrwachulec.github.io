@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Piotr Wachulec">
+    <meta name="description" content="Piotr Wachulec&#39;s personal website">
+    <meta name="keywords" content="blog,developer,architect,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Feature toogles in .NET Core and Azure"/>
+<meta name="twitter:description" content="Feature toogles is an mechanism which allows you to control features in your application. For instance if you want to disable some functionality you can to that by changing some part of configuration. In this post I will show you how to configure it."/>
+
+    <meta property="og:title" content="Feature toogles in .NET Core and Azure" />
+<meta property="og:description" content="Feature toogles is an mechanism which allows you to control features in your application. For instance if you want to disable some functionality you can to that by changing some part of configuration. In this post I will show you how to configure it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/" />
+<meta property="article:published_time" content="2020-05-18T10:42:02+02:00" />
+<meta property="article:modified_time" content="2020-05-19T01:21:31+02:00" />
+
+
+    
+      <base href="https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/">
+    
+    <title>
+  Feature toogles in .NET Core and Azure · Piotr Wachulec
+</title>
+
+    
+      <link rel="canonical" href="https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://wachulec.me/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="https://wachulec.me/css/coder-dark.min.83a2010dac9f59f943b3004cd6c4f230507ad036da635d3621401d42ec4e2835.css" integrity="sha256-g6IBDayfWflDswBM1sTyMFB60DbaY102IUAdQuxOKDU=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.69.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="colorscheme-dark">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://wachulec.me/">
+      Piotr Wachulec
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wachulec.me/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Feature toogles in .NET Core and Azure</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-05-18T10:42:02&#43;02:00'>
+                May 18, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              7-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://wachulec.me/categories/c#-.net/">C# .NET</a></div>
+
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://wachulec.me/tags/.net/">.net</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/.net-core/">.net core</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/azure/">azure</a>
+      <span class="separator">•</span>
+    <a href="https://wachulec.me/tags/cicd/">cicd</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="intro">Intro</h1>
+<p>Feature toogles is an mechanism which allows you to control features and manage them within your application. For instance if you want to disable some functionality you can to that by changing some part of configuration without redeployment, rebuild etc. In this post I will show you how to configure it in a few easy steps in .NET Core web application and Azure. At the end you will find repository with example code which you can test it on your own.</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<p>For using <em>FeatureManagement</em> in .NET Core application you will need two NuGet packages which you can install with two below commands with <strong>dotnet cli</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet add package Microsoft.Azure.AppConfiguration.AspNetCore
+dotnet add package Microsoft.FeatureManagement.AspNetCore
+</code></pre></div><p>The first package called <strong>Microsoft.Azure.AppConfiguration.AspNetCore</strong> will be necessary if you want to use Azure App Configuration. If you want to store all feature toggles (aka feature flags) f.g. in <em>appsettings.json</em>, you don&rsquo;t have to install the first package and you should install only the second one called <strong>Microsoft.FeatureManagement.AspNetCore</strong>. And of course you have to have some .NET Core app where you will implement feature toggles mechanism 😉.</p>
+<p>If you would like to manage the feature toggles from Azure, you have to create <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/overview">Azure App Configuration</a> - it is special service which allows you to manage app settings and feature flags from one place. You can create instance of Azure App Configuration like the other services in Azure - try to find App Configuration in the Marketplace. Before you create App Configuration, check the <a href="https://azure.microsoft.com/en-us/pricing/details/app-configuration/">pricing details</a>. For test and learn purposes you will definitely need the free version, but maybe you will need standard licence in production app.</p>
+<h1 id="app-configuration">App configuration</h1>
+<p>If you installed the packages from the previous paragraph, you are ready to start your adventure with feature flags. I will focus only on WebAPI app, because this kind of apps I&rsquo;m developing on my daily basis. If you want to expand your knowledge, I would like to invite you to the last section of article called <strong>Literature</strong> where you can find many useful sources.</p>
+<h2 id="basic">Basic</h2>
+<p>For using <em>FeatureManagement</em> in your app you have to do two things:</p>
+<ul>
+<li>in <strong>ConfigureServices</strong> method in <strong>Startup</strong> class you have to add <em>FeatureManagement</em>:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">services.AddFeatureManagement();
+</code></pre></div><ul>
+<li>in <em>appsettings.json</em> you have to add section called <em>FeatureManagement</em></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;Logging&#34;</span>: {
+    <span style="color:#f92672">&#34;LogLevel&#34;</span>: {
+      <span style="color:#f92672">&#34;Default&#34;</span>: <span style="color:#e6db74">&#34;Information&#34;</span>,
+      <span style="color:#f92672">&#34;Microsoft&#34;</span>: <span style="color:#e6db74">&#34;Warning&#34;</span>,
+      <span style="color:#f92672">&#34;Microsoft.Hosting.Lifetime&#34;</span>: <span style="color:#e6db74">&#34;Information&#34;</span>
+    }
+  },
+  <span style="color:#f92672">&#34;AllowedHosts&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+  <span style="color:#f92672">&#34;FeatureManagement&#34;</span>: {
+    <span style="color:#f92672">&#34;FeatureA&#34;</span>: <span style="color:#66d9ef">true</span>,
+    <span style="color:#f92672">&#34;FeatureB&#34;</span>: <span style="color:#66d9ef">true</span>
+  }
+}
+</code></pre></div><p>Of course you can set any names of feature flags, it&rsquo;s only example. You can change name of section too by parameterization of <strong>AddFeatureManagement</strong> method.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">services.AddFeatureManagement(options =&gt;
+{
+    options.UseConfiguration(Configuration.GetSection(<span style="color:#e6db74">&#34;MyFeatureFlags&#34;</span>));
+});
+</code></pre></div><h2 id="with-azure-app-configuration">With Azure App Configuration</h2>
+<p>If you would like to use Azure App Configuration too, you have to prepare <strong>CreateHostBuilder</strong> method from <strong>Program</strong> class like below:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IHostBuilder CreateHostBuilder(<span style="color:#66d9ef">string</span>[] args) =&gt;
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =&gt;
+            webBuilder.ConfigureAppConfiguration((hostingContext, config) =&gt;
+                {
+                    <span style="color:#66d9ef">var</span> settings = config.Build();
+                    config.AddAzureAppConfiguration(options =&gt;
+                    {
+                        options.Connect(settings[<span style="color:#e6db74">&#34;ConnectionStrings:AppConfig&#34;</span>])
+                            .UseFeatureFlags();
+                    });
+                })
+                .UseStartup&lt;Startup&gt;());
+</code></pre></div><p>and add middleware in <strong>Configure</strong> method in <strong>Startup</strong> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">app.UseAzureAppConfiguration();
+</code></pre></div><p>As you can see above, there is necessary to set connection string to the App Configuration in app. I stored it in <em>appsettings.json</em>, but you have to remember not to commit it to the repository 😉. You can to store it in environment variable and so on.</p>
+<p>Then you have to add some feature toggles in App Configuration. Go to your App Configuration section. In <strong>Operations</strong> part in menu on the left side you can find button called <strong>Feature manager</strong>.</p>
+<p><img src="https://wachulec.me/images/posts/2020-05-18-feature-toggles-in-dotnet-core-and-azure/feature_manager_button.png" alt="Feature manager button" /></p>
+<p>After clicking on this button you can find list of currently created flags with current states. You can switch state of flag in this place.</p>
+<p><img src="https://wachulec.me/images/posts/2020-05-18-feature-toggles-in-dotnet-core-and-azure/list_of_feature_flags.png" alt="List of feature toggles" /></p>
+<p>You can create new flag by clicking on button <strong>Add</strong> above the list.</p>
+<p><img src="https://wachulec.me/images/posts/2020-05-18-feature-toggles-in-dotnet-core-and-azure/add_new_feature_flag.png" alt="Add new feature toggle" /></p>
+<h1 id="usage">Usage</h1>
+<p>It is worth noting that you can store feature toggles configuration in both places for one application, so you can hold part of feature toggles configuration in <em>appsettings.json</em> file and the rest in App Configuration and use them in the same time. In <strong>Literature</strong> section you can find great and complex article about types of feature toggles and ways of managing them written by Pete Hodgson on Martin Fowler&rsquo;s blog, so I can imagine that you would like to split your toggles configuration.</p>
+<h2 id="enumeration">Enumeration</h2>
+<p>For easy access to feature toggles and avoiding typos, you can create enumeration of feature flags in code.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">namespace</span> FeatureTogglesInNETCore
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> MyFeatureFlags
+    {
+        FeatureA,
+        FeatureB,
+        FeatureC
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="by-example">By example</h2>
+<p>Below you can find an example controller prepared for the explanation purposes.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> System.Threading.Tasks;
+<span style="color:#66d9ef">using</span> Microsoft.AspNetCore.Mvc;
+<span style="color:#66d9ef">using</span> Microsoft.FeatureManagement;
+<span style="color:#66d9ef">using</span> Microsoft.FeatureManagement.Mvc;
+
+<span style="color:#66d9ef">namespace</span> FeatureTogglesInNETCore.Controllers
+{
+<span style="color:#a6e22e">    [ApiController]</span>
+<span style="color:#a6e22e">    [Route(&#34;[controller]</span><span style="color:#e6db74">&#34;)]
+</span><span style="color:#e6db74"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HomeController</span> : Controller
+    {
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IFeatureManager _featureManager;
+
+        <span style="color:#66d9ef">public</span> HomeController(IFeatureManager featureManager)
+        {
+            _featureManager = featureManager;
+        }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">        [HttpGet(&#34;FeatureA&#34;)]</span>
+<span style="color:#a6e22e">        [FeatureGate(MyFeatureFlags.FeatureA)]</span>
+        <span style="color:#66d9ef">public</span> IActionResult GetA()
+        {
+            <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Feature A works!&#34;</span>);
+        }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">        [HttpGet(&#34;FeatureB&#34;)]</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; GetB()
+        {
+            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">await</span> _featureManager.IsEnabledAsync(nameof(MyFeatureFlags.FeatureA)))
+            {
+                <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Feature B is enabled&#34;</span>);
+            }
+
+            <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Feature B is NOT enabled&#34;</span>);
+        }
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">        [HttpGet(&#34;FeatureC&#34;)]</span>
+<span style="color:#a6e22e">        [FeatureGate(MyFeatureFlags.FeatureC)]</span>
+        <span style="color:#66d9ef">public</span> IActionResult GetC()
+        {
+            <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Feature C works&#34;</span>);
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>Between lines 12th and 17th you can find injection of service which implement <strong>IFeatureManager</strong> interface. It is service which allows you to get state of feature toogle. How? An example you can see in lines 29 - 32th. Of course we can hide this strange <em>if</em> instruction in factory, strategy, decorator or whatever you what - this is not purpose of this article and it depends on context.</p>
+<p>Changing state in <em>appsettings</em> file or in App Configuration in Azure will impact on the app behavior. When you will set <em>FeatureA</em> or <em>FeatureC</em> flags on <em>false</em>, then you will get HTTP404 error. I hope you noticed <strong>FeatureGate</strong> annotations in lines 20th and 38th. It allows to switch off controller method. You can add this annotation to controller&rsquo;s class too, so when you will change state of toogle, you will switch on or switch off whole controller. When you change the state of <em>FeatureB</em> toggle, you will get an appropriate inscription depending on the state.</p>
+<h2 id="switching-toggles">Switching toggles</h2>
+<p>You have to remember that thanks to use this mechanism, you don&rsquo;t have to recompile code and rebuild the package or comment code, create many feature branches etc. You have full configuration in one place and you can simply switch on and off parts of application. If you change configuration in <em>appsettings</em> file, you have to restart application. When you will change toggle in App Configuration, toggles will reload automatically without restarting application - by default after 30 seconds. Of course here you have possibility of changing configuration configuration.</p>
+<h1 id="to-sum-up">To sum up</h1>
+<p>I hope you saw that it&rsquo;s really easy mechanism in implementation, but of course in usage it can be as easy as it is very difficult. Many depends on context, number of toggles, architecture of application and so on. In this article I wanted to show you technical part of implementation with Azure and .NET Core. I prepared example project which you can clone and test on your own. You can find it on my <a href="https://github.com/PiotrWachulec/FeatureTogglesInNETCore">GitHub</a>. Remember that if you want to test it with App Configuration, you have to set connection string to App Configuration in <em>appsettings.json</em> file.</p>
+<h1 id="literature">Literature</h1>
+<p>Below you can find sources which can be helpful in exploration of feature toggles topic and on which the article is based on:</p>
+<ul>
+<li><a href="https://martinfowler.com/bliki/FeatureToggle.html">Martin Fowler: &ldquo;Feature Toggles&rdquo;</a></li>
+<li><a href="https://martinfowler.com/articles/feature-toggles.html">Pete Hodgson on Martin Fowler&rsquo;s blog: &ldquo;Feature Toggles (aka Feature Flags)</a></li>
+<li><a href="https://devblogs.microsoft.com/aspnet/redesigning-configuration-refresh-for-azure-app-configuration/">Microsoft ASP.NET Blog: Redesigning Configuration Refresh for Azure App Configuration</a></li>
+<li><a href="https://kasunkodagoda.com/2020/01/16/implementing-feature-flags-for-asp-net-core-applications-using-microsoft-featuremanagement-library/">Kasun Kodagoda: &ldquo;Feature Flags for ASP.Net Core Applications using Microsoft.FeatureManagement Library&rdquo;</a></li>
+<li><a href="https://dev.to/integerman/safe-net-feature-flags-with-featuretoggle-450h">Matt Eland on Dev.to: &ldquo;Safe .NET Feature Flags with FeatureToggle&rdquo;</a></li>
+<li><a href="https://victorops.com/blog/when-and-why-to-adopt-feature-flags">Chris Tozzi: When and Why to Adopt Feature Flags</a></li>
+<li>Microsoft docs:
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app">Quickstart: Create a .NET Core app with App Configuration</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-feature-flag-aspnet-core?tabs=core3x">Quickstart: Add feature flags to an ASP.NET Core app</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/use-feature-flags-dotnet-core?source=docs#mvc-filters">Tutorial: Use feature flags in an ASP.NET Core app</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/enable-dynamic-configuration-dotnet-core">Tutorial: Use dynamic configuration in a .NET Core app</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "wachulec-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>I will help you SOLVE YOUR PROBLEM.</p>
+      
+      
+        ©
+        
+        2020
+         Piotr Wachulec 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-163491252-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>
