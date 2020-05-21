@@ -3,6 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://wachulec.me/tags/azure/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/categories/azure/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/categories/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/event-grid/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/logic-app/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/posts/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/storage/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/</loc>
+    <lastmod>2020-05-21T09:39:31+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://wachulec.me/tags/.net/</loc>
     <lastmod>2020-05-19T10:07:57+02:00</lastmod>
   </url>
@@ -13,17 +58,7 @@
   </url>
   
   <url>
-    <loc>https://wachulec.me/tags/azure/</loc>
-    <lastmod>2020-05-19T10:07:57+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://wachulec.me/categories/c#-.net/</loc>
-    <lastmod>2020-05-19T10:07:57+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/categories/</loc>
     <lastmod>2020-05-19T10:07:57+02:00</lastmod>
   </url>
   
@@ -34,16 +69,6 @@
   
   <url>
     <loc>https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/</loc>
-    <lastmod>2020-05-19T10:07:57+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/posts/</loc>
-    <lastmod>2020-05-19T10:07:57+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/tags/</loc>
     <lastmod>2020-05-19T10:07:57+02:00</lastmod>
   </url>
   
