@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cloud on Piotr Wachulec</title>
+    <link>https://wachulec.me/tags/cloud/</link>
+    <description>Recent content in cloud on Piotr Wachulec</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 15 Jun 2020 08:30:29 +0200</lastBuildDate>
+    
+	<atom:link href="https://wachulec.me/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>#30DEVSTORIES - my knowledge, thoughts and experience</title>
+      <link>https://wachulec.me/posts/30devstories/</link>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
+      
+      <guid>https://wachulec.me/posts/30devstories/</guid>
+      <description>Intro In the Polish IT Community, we had a great initiative on Instagram inspired by Guys from these two profiles: @kjendrzyca and @devenv.pl. Through 30 days we were sharing short Instagram stories related to our dev live - we shared our knowledge, our thoughts, and our experience. If you would like to check stories of other participants - here is a link: https://30devstories.crd.co/ or https://30devstories.pl/.
+In my Instagram stories, I shared much information related to C#/.</description>
+    </item>
+    
+  </channel>
+</rss>

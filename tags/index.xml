@@ -6,17 +6,53 @@
     <description>Recent content in Tags on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 21 May 2020 09:11:37 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 08:30:29 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>.net</title>
+      <link>https://wachulec.me/tags/.net/</link>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/.net/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>.net core</title>
+      <link>https://wachulec.me/tags/.net-core/</link>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/.net-core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>azure</title>
       <link>https://wachulec.me/tags/azure/</link>
-      <pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
       
       <guid>https://wachulec.me/tags/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>https://wachulec.me/tags/cloud/</link>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>software architecture</title>
+      <link>https://wachulec.me/tags/software-architecture/</link>
+      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/software-architecture/</guid>
       <description></description>
     </item>
     
@@ -44,24 +80,6 @@
       <pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate>
       
       <guid>https://wachulec.me/tags/storage/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>.net</title>
-      <link>https://wachulec.me/tags/.net/</link>
-      <pubDate>Mon, 18 May 2020 10:42:02 +0200</pubDate>
-      
-      <guid>https://wachulec.me/tags/.net/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>.net core</title>
-      <link>https://wachulec.me/tags/.net-core/</link>
-      <pubDate>Mon, 18 May 2020 10:42:02 +0200</pubDate>
-      
-      <guid>https://wachulec.me/tags/.net-core/</guid>
       <description></description>
     </item>
     
