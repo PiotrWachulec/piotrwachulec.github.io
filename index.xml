@@ -6,10 +6,22 @@
     <description>Recent content on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 16 Apr 2020 07:53:12 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 14 Jul 2020 13:13:39 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Privacy</title>
+      <link>https://wachulec.me/privacy/</link>
+      <pubDate>Tue, 14 Jul 2020 13:13:39 +0200</pubDate>
+      
+      <guid>https://wachulec.me/privacy/</guid>
+      <description>Hi!
+If you visit this site, you are probably interested in protecting your personal data. I care about the privacy and security of my readers, so below you will find all information about cookies, processing personal data and all relevant functions and mechanisms on the site.
+The administrator of the Wachulec.me blog is Piotr Wachulec, residing in Warsaw in Poland. To contact send an email to piotr (at) wachulec.me.
+Personal data is processed on this blog and cookies appear.</description>
+    </item>
     
     <item>
       <title>#30DEVSTORIES - my knowledge, thoughts and experience</title>
