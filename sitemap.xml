@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://wachulec.me/</loc>
-    <lastmod>2020-07-14T14:53:10+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://wachulec.me/privacy/</loc>
     <lastmod>2020-07-14T14:53:10+02:00</lastmod>
   </url>
@@ -34,6 +29,11 @@
   
   <url>
     <loc>https://wachulec.me/tags/cloud/</loc>
+    <lastmod>2020-06-15T08:54:56+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/</loc>
     <lastmod>2020-06-15T08:54:56+02:00</lastmod>
   </url>
   
