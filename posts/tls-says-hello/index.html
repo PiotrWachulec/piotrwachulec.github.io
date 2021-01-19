@@ -7,27 +7,27 @@
     <meta http-equiv="Content-Language" content="en">
 
     <meta name="author" content="Piotr Wachulec">
-    <meta name="description" content="Running unit tests manually after each small change can be annoying. Visual Studio gives developers the possibility to set up live reloading of tests after saving changes.">
+    <meta name="description" content="In the post, I&#39;m describing how the connection overt HTTPS with TLS is set up.">
     <meta name="keywords" content="blog,developer,architect,personal">
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Live Unit Testing with .NET and Visual Studio"/>
-<meta name="twitter:description" content="Running unit tests manually after each small change can be annoying. Visual Studio gives developers the possibility to set up live reloading of tests after saving changes."/>
+<meta name="twitter:title" content="TLS says &#39;Hello!&#39;"/>
+<meta name="twitter:description" content="In the post, I&#39;m describing how the connection overt HTTPS with TLS is set up."/>
 
-    <meta property="og:title" content="Live Unit Testing with .NET and Visual Studio" />
-<meta property="og:description" content="Running unit tests manually after each small change can be annoying. Visual Studio gives developers the possibility to set up live reloading of tests after saving changes." />
+    <meta property="og:title" content="TLS says &#39;Hello!&#39;" />
+<meta property="og:description" content="In the post, I&#39;m describing how the connection overt HTTPS with TLS is set up." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/" />
-<meta property="article:published_time" content="2020-04-17T10:23:10+02:00" />
-<meta property="article:modified_time" content="2020-07-18T16:01:11+02:00" />
+<meta property="og:url" content="https://wachulec.me/posts/tls-says-hello/" />
+<meta property="article:published_time" content="2021-01-19T11:53:40+01:00" />
+<meta property="article:modified_time" content="2021-01-19T13:05:20+01:00" />
 
 
     <title>
-  Live Unit Testing with .NET and Visual Studio · Piotr Wachulec
+  TLS says &#39;Hello!&#39; · Piotr Wachulec
 </title>
 
     
-      <link rel="canonical" href="https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/">
+      <link rel="canonical" href="https://wachulec.me/posts/tls-says-hello/">
     
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
@@ -126,104 +126,59 @@
     <article>
       <header>
         <div class="post-title">
-          <h1 class="title">Live Unit Testing with .NET and Visual Studio</h1>
+          <h1 class="title">TLS says &#39;Hello!&#39;</h1>
         </div>
         <div class="post-meta">
           <div class="date">
             <span class="posted-on">
               <i class="fa fa-calendar" aria-hidden="true"></i>
-              <time datetime='2020-04-17T10:23:10&#43;02:00'>
-                April 17, 2020
+              <time datetime='2021-01-19T11:53:40&#43;01:00'>
+                January 19, 2021
               </time>
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              4-minute read
+              2-minute read
             </span>
           </div>
-          
+          <div class="authors">
+    <i class="fa fa-user" aria-hidden="true"></i>
+      <a href="https://wachulec.me/authors/piotr-wachulec/">Piotr Wachulec</a></div>
           <div class="categories">
   <i class="fa fa-folder" aria-hidden="true"></i>
-    <a href="https://wachulec.me/categories/c#-.net/">C# .NET</a></div>
+    <a href="https://wachulec.me/categories/networking/">Networking</a></div>
 
           <div class="tags">
   <i class="fa fa-tag" aria-hidden="true"></i>
-    <a href="https://wachulec.me/tags/.net/">.net</a>
+    <a href="https://wachulec.me/tags/tls/">tls</a>
       <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/.net-core/">.net core</a>
+    <a href="https://wachulec.me/tags/networking/">networking</a>
       <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/visual-studio/">visual studio</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/unit-tests/">unit tests</a></div>
+    <a href="https://wachulec.me/tags/client-server/">client-server</a></div>
 
         </div>
       </header>
 
       <div>
         
-        <p>A few days ago I was looking for something related to unit tests in the Microsoft documentation. I came to the tab titled &lsquo;Live unit testing&rsquo; and I decided to check what is it. It is quite interesting, because why I have to click to run unit tests when I made small changes in code? We have the live reload functionality in frontend or some mobile technologies to see changes in the interface, so the developer don&rsquo;t have manually click <em>F5</em> to refresh the page. The same situation is on backend side. When I&rsquo;m working on changes in business logic I want to have continuous response that my changes don&rsquo;t break other parts of service.</p>
-<h1 id="first-drawback">First drawback</h1>
-<p>Excited I began to delve into this part of the documentation, but my excitement did not last too long. It turned out that this functionality is available only in Visual Studio <strong>Enterprise</strong>&hellip; (offtop) To be honest for several weeks I use a different IDE - <a href="https://www.jetbrains.com/rider/">Rider</a>.</p>
-<h1 id="demo">Demo</h1>
-<p>After virtual machine creation I started to prepare some demo codes. I created <strong>FooProject</strong> console app in .NET Core 3.1 with class <strong>BarService</strong> and <strong>FooProject.UnitTests</strong> NUnit Test project. I defined in <strong>BarService</strong> method which will check if string pushed into method is a palindrome.</p>
-<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/solution_explorer.png" alt="Solution explorer" /></p>
-<p>Then I created a couple of tests (I added FluentAssertion package - thanks to this package assertions are more readable, I can recommend it!).</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> FluentAssertions;
-<span style="color:#66d9ef">using</span> FooService;
-<span style="color:#66d9ef">using</span> NUnit.Framework;
-
-<span style="color:#66d9ef">namespace</span> FooProject.UnitTests
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BarServiceTests</span>
-    {
-<span style="color:#a6e22e">        [TestCase(&#34;Sore was I ere I saw Eros.&#34;, true)]</span>
-<span style="color:#a6e22e">        [TestCase(&#34;Sore was I ere I saw Eros.   &#34;, true)]</span>
-<span style="color:#a6e22e">        [TestCase(&#34;   Sore was I ere I saw Eros.&#34;, true)]</span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> StringIsPalindrom_ReturnsAsDefinedInCases(<span style="color:#66d9ef">string</span> stringToTest, <span style="color:#66d9ef">bool</span> expectedResult)
-        {
-            BarService barService = <span style="color:#66d9ef">new</span> BarService();
-
-            <span style="color:#66d9ef">bool</span> result = barService.StringIsPalindrom(stringToTest);
-            result.Should().Be(expectedResult);
-        }
-    }
-}
-</code></pre></td></tr></table>
-</div>
-</div><h1 id="live-reload-in-action">Live reload in action</h1>
-<p>Let&rsquo;s start work. Live Unit Testing Window you can find in Test menu.</p>
-<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/test_menu.png" alt="Test menu" /></p>
-<p>When you click Play button the solution will be checked and VS will find tests. For now I don&rsquo;t have any implementation of <em>StringIsPalindrom</em> method, so all of my tests failed.</p>
-<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/tests_all_fails.png" alt="All test failed" /></p>
-<p>Below you can find screencast with filled <em>StringIsPalindrom</em> method. When I comment one line (and due to this two of three test failed) and I clicked <strong>Ctrl + S</strong> tests were reloaded. What is more on the right side of code you have marked which line of codes are covered by tests and information if tests passed or failed.</p>
-<p><img src="https://wachulec.me/images/posts/2020-04-17-dotNET-Live-Unit-Testing-in-VS/live_tests.gif" alt="Live tests" /></p>
-<h1 id="configuration-and-other-restrictions">Configuration and other restrictions</h1>
-<p>We saw that it so interesting feature, but you have to have an enterprise licence for VS. Another restricion is minimal version test libraries. In my case NUnit has to be at least 3.5.0.</p>
-<p>There are a lot of possibilities of configuration. For example you can restrict number of processes which are generated by live reload or turn off live unit testing when your battery is low. What is more if you have many of tests in project and you don&rsquo;t want to check all of them in live reload you can exclude selected tests or all of tests from project. More information in details you can find in <a href="https://docs.microsoft.com/en-us/visualstudio/test/live-unit-testing?view=vs-2019">docs</a>.</p>
+        <p>TLS is the protocol for encrypting the information during transporting them via the Internet. To connect the client and the server to use TLS protocol and set up the secure connection between them the below steps need to be done (we can call it as TLS handshake):</p>
+<ol>
+<li>The client sends &lsquo;Hello&rsquo; message to the server. The message contains the information about which versions of TLS or SSL protocols and which cryptographic alghoritms are supported by the client.</li>
+<li>The server responds with &lsquo;Hello&rsquo; message which contains:
+<ul>
+<li>the information which alghoritm was chosen by the server,</li>
+<li>session ID,</li>
+<li>server&rsquo;s digital certificate,</li>
+<li>public key.</li>
+</ul>
+</li>
+<li>The client checks the certificate with the certificate authority - then the client is sure that it can trust the server.</li>
+<li>The client sends to the server a random string encrypted with the public key which got from the server. This random string we can call &lsquo;shared key&rsquo;.</li>
+<li>The client sends &lsquo;finished&rsquo; message to the server. The message is encrypted with the shared key.</li>
+<li>The server sends &lsquo;finished&rsquo; message to the client. The message is encrypted with the shared key too.</li>
+</ol>
+<p>After that handshake, the client and server can communicate with each other securely. The picture below shows the flow of messages. The next messages between the client and the server are encrypted with the shared key.</p>
+<p><img src="https://wachulec.me/images/posts/2021-01-19-tls-says-hello/TLS.png" alt="TLS communication setup schema" /></p>
 <h3>Newsletter</h3>
 <p>Thank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it. If you want to be informed about my next entries or occasionally get a message with a collection of some interesting links, please subscribe to my newsletter. I will be extremely pleased if you do this and join my community!</p>
 

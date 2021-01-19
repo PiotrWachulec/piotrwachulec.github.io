@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Jun 2020 08:30:29 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 19 Jan 2021 11:53:40 +0100</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>client-server</title>
+      <link>https://wachulec.me/tags/client-server/</link>
+      <pubDate>Tue, 19 Jan 2021 11:53:40 +0100</pubDate>
+      
+      <guid>https://wachulec.me/tags/client-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>networking</title>
+      <link>https://wachulec.me/tags/networking/</link>
+      <pubDate>Tue, 19 Jan 2021 11:53:40 +0100</pubDate>
+      
+      <guid>https://wachulec.me/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tls</title>
+      <link>https://wachulec.me/tags/tls/</link>
+      <pubDate>Tue, 19 Jan 2021 11:53:40 +0100</pubDate>
+      
+      <guid>https://wachulec.me/tags/tls/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>.net</title>
