@@ -3,8 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://wachulec.me/categories/azure/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://wachulec.me/categories/</loc>
-    <lastmod>2021-01-19T13:05:20+01:00</lastmod>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/posts/disassociate-public-ip-from-azure-firewall/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/firewall/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/ip/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/categories/networking/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/posts/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wachulec.me/tags/</loc>
+    <lastmod>2021-01-20T10:32:34+01:00</lastmod>
   </url>
   
   <url>
@@ -13,27 +53,7 @@
   </url>
   
   <url>
-    <loc>https://wachulec.me/categories/networking/</loc>
-    <lastmod>2021-01-19T13:05:20+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://wachulec.me/tags/networking/</loc>
-    <lastmod>2021-01-19T13:05:20+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/</loc>
-    <lastmod>2021-01-19T13:05:20+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/posts/</loc>
-    <lastmod>2021-01-19T13:05:20+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/tags/</loc>
     <lastmod>2021-01-19T13:05:20+01:00</lastmod>
   </url>
   
@@ -80,11 +100,6 @@
   <url>
     <loc>https://wachulec.me/tags/software-architecture/</loc>
     <lastmod>2020-06-15T08:54:56+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wachulec.me/categories/azure/</loc>
-    <lastmod>2020-07-18T16:01:11+02:00</lastmod>
   </url>
   
   <url>
