@@ -19,7 +19,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wachulec.me/posts/how-to-upgrade-sku-of-public-ip-address-azure/" />
 <meta property="article:published_time" content="2021-01-21T11:53:23+01:00" />
-<meta property="article:modified_time" content="2021-01-21T14:38:26+01:00" />
+<meta property="article:modified_time" content="2021-01-21T14:54:53+01:00" />
 
 
     <title>
@@ -138,7 +138,7 @@
             </span>
             <span class="reading-time">
               <i class="fa fa-clock-o" aria-hidden="true"></i>
-              2-minute read
+              3-minute read
             </span>
           </div>
           <div class="authors">
@@ -190,6 +190,11 @@ Set-AzPublicIpAddress -PublicIpAddress $pubIP
 </div><p>Again, you have to connect to your Azure account from Powershell. The next two steps are optional - only required if you want to change subscription, f.g. because you logged into another one by default.</p>
 <p>In the next three lines, we are configuring some useful variables - we are defining in which Resource Group the public IP is existing and what is the name of the resource. Wa are configuring the new SKU name too.</p>
 <p>The last three lines are the most important - we are taking the information about public IP, we are assigning the new SKU to the public IP and then we are committing the changes by the last line.</p>
+<p>You have to remember that there are some limitations:</p>
+<blockquote>
+<p>Public IPs upgraded from Basic to Standard SKU continue to have no availability zones. This means they cannot be associated with an Azure resource that is either zone-redundant or tied to a pre-specified zone in regions where this is offered. <em>~Microsoft Docs</em></p>
+</blockquote>
+<p>What is more, to upgrade the SKU, the public IP address cannot be associated with any resource. And you have to remember that <strong>you cannot downgrade SKU</strong>!</p>
 <p>I hope it will be useful for you!</p>
 <h3>Newsletter</h3>
 <p>Thank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it. If you want to be informed about my next entries or occasionally get a message with a collection of some interesting links, please subscribe to my newsletter. I will be extremely pleased if you do this and join my community!</p>
