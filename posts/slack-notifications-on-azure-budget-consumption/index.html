@@ -19,7 +19,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wachulec.me/posts/slack-notifications-on-azure-budget-consumption/" />
 <meta property="article:published_time" content="2021-04-21T11:14:08+02:00" />
-<meta property="article:modified_time" content="2021-04-21T11:31:44+02:00" />
+<meta property="article:modified_time" content="2021-04-21T11:42:35+02:00" />
 
 
     <title>
@@ -175,12 +175,12 @@
 <p><img src="https://wachulec.me/images/posts/2021-04-21-slack-notifications-on-azure-budget-consumption/incoming-webhook-app.png" alt="Incoming WebHooks Slack App" /></p>
 <p>We already have added that app and webhook for sending info about costs, so to avoid reaching the limits of the Incoming WebHooks app, I reused the existing webhook and channel for used for costs notification purposes.</p>
 <h1 id="budget">Budget</h1>
-<p>The next step is to create the budget for subscription.</p>
+<p>In the next step, is to create the budget for the subscription.</p>
 <p><img src="https://wachulec.me/images/posts/2021-04-21-slack-notifications-on-azure-budget-consumption/budget.png" alt="Azure Budget creation" /></p>
 <p>On next step we have to configure notifications and alarms.</p>
 <p><img src="https://wachulec.me/images/posts/2021-04-21-slack-notifications-on-azure-budget-consumption/budget-alarms.png" alt="Azure Budget alarms page" /></p>
-<p>There I added new action group where I added sending email in the Notifications section. In Actions sections I added webhook URI.</p>
-<p>After that, I could added alarms:</p>
+<p>There I added a new action group where I added sending email in the Notifications section. In the Actions section, I added a webhook URI.</p>
+<p>After that, I could add alarms:</p>
 <p><img src="https://wachulec.me/images/posts/2021-04-21-slack-notifications-on-azure-budget-consumption/budget-alerts.png" alt="Azure Budget alarms ready" /></p>
 <p>The budget was created.</p>
 <p><img src="https://wachulec.me/images/posts/2021-04-21-slack-notifications-on-azure-budget-consumption/ready-budget.png" alt="Azure Budget created" /></p>
