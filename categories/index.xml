@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Apr 2021 10:20:40 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 21 Apr 2021 11:14:08 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Administration</title>
       <link>https://wachulec.me/categories/administration/</link>
-      <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
       
       <guid>https://wachulec.me/categories/administration/</guid>
       <description></description>
@@ -23,9 +23,18 @@
     <item>
       <title>azure</title>
       <link>https://wachulec.me/categories/azure/</link>
-      <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
       
       <guid>https://wachulec.me/categories/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Costs</title>
+      <link>https://wachulec.me/categories/costs/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/categories/costs/</guid>
       <description></description>
     </item>
     

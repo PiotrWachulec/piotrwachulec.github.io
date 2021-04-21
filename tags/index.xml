@@ -6,10 +6,55 @@
     <description>Recent content in Tags on Piotr Wachulec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Apr 2021 10:20:40 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 21 Apr 2021 11:14:08 +0200</lastBuildDate>
     
 	<atom:link href="https://wachulec.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>azure</title>
+      <link>https://wachulec.me/tags/azure/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>budget</title>
+      <link>https://wachulec.me/tags/budget/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/budget/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>https://wachulec.me/tags/cloud/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slack</title>
+      <link>https://wachulec.me/tags/slack/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/slack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>webhook</title>
+      <link>https://wachulec.me/tags/webhook/</link>
+      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
+      
+      <guid>https://wachulec.me/tags/webhook/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>arm</title>
@@ -21,29 +66,11 @@
     </item>
     
     <item>
-      <title>azure</title>
-      <link>https://wachulec.me/tags/azure/</link>
-      <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
-      
-      <guid>https://wachulec.me/tags/azure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>bicep</title>
       <link>https://wachulec.me/tags/bicep/</link>
       <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
       
       <guid>https://wachulec.me/tags/bicep/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cloud</title>
-      <link>https://wachulec.me/tags/cloud/</link>
-      <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
-      
-      <guid>https://wachulec.me/tags/cloud/</guid>
       <description></description>
     </item>
     
