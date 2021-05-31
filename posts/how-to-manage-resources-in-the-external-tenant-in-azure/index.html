@@ -19,7 +19,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/" />
 <meta property="article:published_time" content="2021-04-18T10:20:40+02:00" />
-<meta property="article:modified_time" content="2021-04-18T10:51:09+02:00" />
+<meta property="article:modified_time" content="2021-05-31T13:58:13+02:00" />
 
 
     <title>
@@ -174,7 +174,7 @@
 <p>The answer is: yes! And it is called <strong>Azure Lighthouse</strong>.</p>
 <p>From docs:</p>
 <blockquote>
-<p>Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants. ~<a href="%5Bhttps://docs.microsoft.com/en-us/azure/lighthouse/overview%5D(https://docs.microsoft.com/en-us/azure/lighthouse/overview)">What is Azure Lighthouse?</a></p>
+<p>Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants. ~<a href="https://docs.microsoft.com/en-us/azure/lighthouse/overview">What is Azure Lighthouse?</a></p>
 </blockquote>
 <h1 id="how-does-it-work">How does it work?</h1>
 <p>Azure Lighthouse enables managing resources in another tenant directly from your &lsquo;home&rsquo; tenant. You can define with that which users and/or Active Directory <strong>Security</strong> groups should have access to which resources and with which roles.</p>
@@ -186,13 +186,13 @@
 <li>List of subscription IDs and/or resource group IDs to which you have to have access</li>
 <li>List of users and/or Active Directory groups which you want to assign to manage customer environments - <strong>IMPORTANT</strong>: AD groups have to be <strong>Security</strong> groups!</li>
 <li>List of roles and permissions (with their IDs) which you want to assign</li>
-<li>Someone with non-guest account in customer&rsquo;s tenant and <code>Microsoft.Authorization/roleAssignments/write</code> permission - it is required to create assignment (<a href="%5Bhttps://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#deploy-the-azure-resource-manager-templates%5D(https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#deploy-the-azure-resource-manager-templates)">Deploy the Azure Resource Manager templates</a>)</li>
+<li>Someone with non-guest account in customer&rsquo;s tenant and <code>Microsoft.Authorization/roleAssignments/write</code> permission - it is required to create assignment (<a href="https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#deploy-the-azure-resource-manager-templates">Deploy the Azure Resource Manager templates</a>)</li>
 <li>Something called <code>mspOfferName</code> and <code>mspOfferDescription</code> - the first one defines the connection between both tenants and their resources. <strong>IMPORTANT: You can&rsquo;t have multiple assignments at the same scope with the same <code>mspOfferName</code>.</strong></li>
 </ul>
 <h1 id="how-to-onboard-the-customer">How to onboard the customer?</h1>
-<p>If you gathered all of the above requirements, on <a href="%5Bhttps://github.com/Azure/Azure-Lighthouse-samples%5D(https://github.com/Azure/Azure-Lighthouse-samples)">Github</a> you can find example ARM templates that allow you to onboard. You have to deploy prepared and fulfilled templates to each subscription separately.</p>
+<p>If you gathered all of the above requirements, on <a href="https://github.com/Azure/Azure-Lighthouse-samples">Github</a> you can find example ARM templates that allow you to onboard. You have to deploy prepared and fulfilled templates to each subscription separately.</p>
 <h1 id="example">Example</h1>
-<p>For preparing example I will use the template from the official <a href="%5Bhttps://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer%5D(https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer)">docs</a>:</p>
+<p>For preparing example I will use the template from the official <a href="https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer">docs</a>:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
