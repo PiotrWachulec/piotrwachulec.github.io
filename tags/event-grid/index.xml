@@ -1,25 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>event grid on Piotr Wachulec</title>
-    <link>https://wachulec.me/tags/event-grid/</link>
-    <description>Recent content in event grid on Piotr Wachulec</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 21 May 2020 09:11:37 +0200</lastBuildDate>
-    
-	<atom:link href="https://wachulec.me/tags/event-grid/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>No code app with Azure Storage, Event Grid and Logic App</title>
-      <link>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</link>
-      <pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</guid>
-      <description>Intro On Instagram I got the nomination for #Hot16CodeChallange where in 72 h I had to prepare some fancy application in 16 lines of code. I cheated a little bit, because I didn&amp;rsquo;t write any line of code! In my solution I used Azure Storage, Azure Event Grid and Azure Logic App.
-Business case Imagine that you have yours company site and you would like to hire new person to your company.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>event grid on Piotr Wachulec</title><link>https://wachulec.me/tags/event-grid/</link><description>Recent content in event grid on Piotr Wachulec</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 21 May 2020 09:11:37 +0200</lastBuildDate><atom:link href="https://wachulec.me/tags/event-grid/index.xml" rel="self" type="application/rss+xml"/><item><title>No code app with Azure Storage, Event Grid and Logic App</title><link>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</link><pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate><guid>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</guid><description>Intro On Instagram I got the nomination for #Hot16CodeChallange where in 72 h I had to prepare some fancy application in 16 lines of code. I cheated a little bit, because I didn&amp;rsquo;t write any line of code! In my solution I used Azure Storage, Azure Event Grid and Azure Logic App.
+Business case Imagine that you have yours company site and you would like to hire new person to your company.</description></item></channel></rss>

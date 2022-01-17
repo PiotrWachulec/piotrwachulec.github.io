@@ -1,148 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Piotr Wachulec</title>
-    <link>https://wachulec.me/</link>
-    <description>Recent content on Piotr Wachulec</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 26 Apr 2021 16:14:31 +0200</lastBuildDate>
-    
-	<atom:link href="https://wachulec.me/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Optimization of environmental costs. Disks. #01</title>
-      <link>https://wachulec.me/posts/optimization-of-environmental-costs-disks-vol-01/</link>
-      <pubDate>Mon, 26 Apr 2021 16:14:31 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/optimization-of-environmental-costs-disks-vol-01/</guid>
-      <description>The greater the environment, the more likely some resources are abandoned and unused. You know, someone requested a virtual machine, app service, but it turned out that it is unnecessary. Or some project or PoC finished and test resources are not removed. Due to this, it is important to look at your resources and check if can be removed or resized for example.
-If you have virtual machines in your Azure environment, it&amp;rsquo;s always good to check some things related to disks.</description>
-    </item>
-    
-    <item>
-      <title>Slack notifications on Azure budget consumption</title>
-      <link>https://wachulec.me/posts/slack-notifications-on-azure-budget-consumption/</link>
-      <pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/slack-notifications-on-azure-budget-consumption/</guid>
-      <description>In my free time (I don&amp;rsquo;t have too much free time, to be honest 😋) I help my colleagues in the open-source project where juniors can learn something useful for their career. I started to deliver some infra for that stuff on Azure, but due to the fact that I&amp;rsquo;m paying for resources from my pocket, I want to have some nice notifications if something consumes a big amount of money and burns the budget.</description>
-    </item>
-    
-    <item>
-      <title>How to manage resources in the external tenant in Azure?</title>
-      <link>https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/</link>
-      <pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/</guid>
-      <description>The case You want to manage resources in other tenants without additional workload around that like accounts creation for you and your teammates in the destination Azure tenant or disabling those accounts if someone leaves the team. Is there any solution for that?
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Piotr Wachulec</title><link>https://wachulec.me/</link><description>Recent content on Piotr Wachulec</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 26 Apr 2021 16:14:31 +0200</lastBuildDate><atom:link href="https://wachulec.me/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimization of environmental costs. Disks. #01</title><link>https://wachulec.me/posts/optimization-of-environmental-costs-disks-vol-01/</link><pubDate>Mon, 26 Apr 2021 16:14:31 +0200</pubDate><guid>https://wachulec.me/posts/optimization-of-environmental-costs-disks-vol-01/</guid><description>The greater the environment, the more likely some resources are abandoned and unused. You know, someone requested a virtual machine, app service, but it turned out that it is unnecessary. Or some project or PoC finished and test resources are not removed. Due to this, it is important to look at your resources and check if can be removed or resized for example.
+If you have virtual machines in your Azure environment, it&amp;rsquo;s always good to check some things related to disks.</description></item><item><title>Slack notifications on Azure budget consumption</title><link>https://wachulec.me/posts/slack-notifications-on-azure-budget-consumption/</link><pubDate>Wed, 21 Apr 2021 11:14:08 +0200</pubDate><guid>https://wachulec.me/posts/slack-notifications-on-azure-budget-consumption/</guid><description>In my free time (I don&amp;rsquo;t have too much free time, to be honest 😋) I help my colleagues in the open-source project where juniors can learn something useful for their career. I started to deliver some infra for that stuff on Azure, but due to the fact that I&amp;rsquo;m paying for resources from my pocket, I want to have some nice notifications if something consumes a big amount of money and burns the budget.</description></item><item><title>How to manage resources in the external tenant in Azure?</title><link>https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/</link><pubDate>Sun, 18 Apr 2021 10:20:40 +0200</pubDate><guid>https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/</guid><description>The case You want to manage resources in other tenants without additional workload around that like accounts creation for you and your teammates in the destination Azure tenant or disabling those accounts if someone leaves the team. Is there any solution for that?
 The answer is: yes! And it is called Azure Lighthouse.
 From docs:
- Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants.</description>
-    </item>
-    
-    <item>
-      <title>How to upgrade the SKU of the public IP address in the Azure?</title>
-      <link>https://wachulec.me/posts/how-to-upgrade-sku-of-public-ip-address-azure/</link>
-      <pubDate>Thu, 21 Jan 2021 11:53:23 +0100</pubDate>
-      
-      <guid>https://wachulec.me/posts/how-to-upgrade-sku-of-public-ip-address-azure/</guid>
-      <description>For many reasons, you can want to upgrade to the SKU of the public IP. Recently I had to do that too. Fortunately the possibility of upgrade the public IP from Basic to Standard SKU has been in GA for a few days. Without such possibility you would have to recreate the public IP resource that is associated with a loss of assigned IP address - and updating it could be really difficult.</description>
-    </item>
-    
-    <item>
-      <title>Disassociate public IP from Azure Firewall with Powershell</title>
-      <link>https://wachulec.me/posts/disassociate-public-ip-from-azure-firewall/</link>
-      <pubDate>Wed, 20 Jan 2021 10:13:38 +0100</pubDate>
-      
-      <guid>https://wachulec.me/posts/disassociate-public-ip-from-azure-firewall/</guid>
-      <description>With the below simple ten lines script, you can disassociate the public IP address from your Azure Firewall instance.
-1 2 3 4 5 6 7 8 9 10  Connect-AzAccount $context = Get-AzSubscription -SubscriptionId &amp;lt;YourSubscriptionId&amp;gt; Set-AzContext $context $rgName = &amp;#39;&amp;lt;PublicIpRgName&amp;gt;&amp;#39; $pipName = &amp;#39;&amp;lt;PublicIpName&amp;gt;&amp;#39; $azName = &amp;#39;&amp;lt;AzureFirewallName&amp;gt;&amp;#39; $pip = Get-AzPublicIpAddress -Name $pipName -ResourceGroupName $rgName $azFw = Get-AzFirewall -Name $azName -ResourceGroupName $rgName $azFw.RemovePublicIpAddress($pip) $azFw | Set-AzFirewall   First of all, you have to connect to your Azure account from Powershell.</description>
-    </item>
-    
-    <item>
-      <title>TLS says &#39;Hello!&#39;</title>
-      <link>https://wachulec.me/posts/tls-says-hello/</link>
-      <pubDate>Tue, 19 Jan 2021 11:53:40 +0100</pubDate>
-      
-      <guid>https://wachulec.me/posts/tls-says-hello/</guid>
-      <description>TLS is the protocol for encrypting the information during transporting them via the Internet. To connect the client and the server to use TLS protocol and set up the secure connection between them the below steps need to be done (we can call it as TLS handshake):
- The client sends &amp;lsquo;Hello&amp;rsquo; message to the server. The message contains the information about which versions of TLS or SSL protocols and which cryptographic alghoritms are supported by the client.</description>
-    </item>
-    
-    <item>
-      <title>Privacy</title>
-      <link>https://wachulec.me/privacy/</link>
-      <pubDate>Tue, 14 Jul 2020 13:13:39 +0200</pubDate>
-      
-      <guid>https://wachulec.me/privacy/</guid>
-      <description>Hi!
+Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants.</description></item><item><title>How to upgrade the SKU of the public IP address in the Azure?</title><link>https://wachulec.me/posts/how-to-upgrade-sku-of-public-ip-address-azure/</link><pubDate>Thu, 21 Jan 2021 11:53:23 +0100</pubDate><guid>https://wachulec.me/posts/how-to-upgrade-sku-of-public-ip-address-azure/</guid><description>For many reasons, you can want to upgrade to the SKU of the public IP. Recently I had to do that too. Fortunately the possibility of upgrade the public IP from Basic to Standard SKU has been in GA for a few days. Without such possibility you would have to recreate the public IP resource that is associated with a loss of assigned IP address - and updating it could be really difficult.</description></item><item><title>Disassociate public IP from Azure Firewall with Powershell</title><link>https://wachulec.me/posts/disassociate-public-ip-from-azure-firewall/</link><pubDate>Wed, 20 Jan 2021 10:13:38 +0100</pubDate><guid>https://wachulec.me/posts/disassociate-public-ip-from-azure-firewall/</guid><description>With the below simple ten lines script, you can disassociate the public IP address from your Azure Firewall instance.
+1 2 3 4 5 6 7 8 9 10 Connect-AzAccount $context = Get-AzSubscription -SubscriptionId &amp;lt;YourSubscriptionId&amp;gt; Set-AzContext $context $rgName = &amp;#39;&amp;lt;PublicIpRgName&amp;gt;&amp;#39; $pipName = &amp;#39;&amp;lt;PublicIpName&amp;gt;&amp;#39; $azName = &amp;#39;&amp;lt;AzureFirewallName&amp;gt;&amp;#39; $pip = Get-AzPublicIpAddress -Name $pipName -ResourceGroupName $rgName $azFw = Get-AzFirewall -Name $azName -ResourceGroupName $rgName $azFw.RemovePublicIpAddress($pip) $azFw | Set-AzFirewall First of all, you have to connect to your Azure account from Powershell.</description></item><item><title>TLS says 'Hello!'</title><link>https://wachulec.me/posts/tls-says-hello/</link><pubDate>Tue, 19 Jan 2021 11:53:40 +0100</pubDate><guid>https://wachulec.me/posts/tls-says-hello/</guid><description>TLS is the protocol for encrypting the information during transporting them via the Internet. To connect the client and the server to use TLS protocol and set up the secure connection between them the below steps need to be done (we can call it as TLS handshake):
+The client sends &amp;lsquo;Hello&amp;rsquo; message to the server. The message contains the information about which versions of TLS or SSL protocols and which cryptographic alghoritms are supported by the client.</description></item><item><title>Privacy</title><link>https://wachulec.me/privacy/</link><pubDate>Tue, 14 Jul 2020 13:13:39 +0200</pubDate><guid>https://wachulec.me/privacy/</guid><description>Hi!
 If you visit this site, you are probably interested in protecting your personal data. I care about the privacy and security of my readers, so below you will find all information about cookies, processing personal data and all relevant functions and mechanisms on the site.
 The administrator of the Wachulec.me blog is Piotr Wachulec, residing in Warsaw in Poland. To contact send an email to piotr (at) wachulec.me.
-Personal data is processed on this blog and cookies appear.</description>
-    </item>
-    
-    <item>
-      <title>#30DEVSTORIES - my knowledge, thoughts and experience</title>
-      <link>https://wachulec.me/posts/30devstories/</link>
-      <pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/30devstories/</guid>
-      <description>Intro In the Polish IT Community, we had a great initiative on Instagram inspired by Guys from these two profiles: @kjendrzyca and @devenv.pl. Through 30 days we were sharing short Instagram stories related to our dev live - we shared our knowledge, our thoughts, and our experience. If you would like to check stories of other participants - here is a link: https://30devstories.crd.co/ or https://30devstories.pl/.
-In my Instagram stories, I shared much information related to C#/.</description>
-    </item>
-    
-    <item>
-      <title>No code app with Azure Storage, Event Grid and Logic App</title>
-      <link>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</link>
-      <pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</guid>
-      <description>Intro On Instagram I got the nomination for #Hot16CodeChallange where in 72 h I had to prepare some fancy application in 16 lines of code. I cheated a little bit, because I didn&amp;rsquo;t write any line of code! In my solution I used Azure Storage, Azure Event Grid and Azure Logic App.
-Business case Imagine that you have yours company site and you would like to hire new person to your company.</description>
-    </item>
-    
-    <item>
-      <title>Feature toggles in .NET Core and Azure</title>
-      <link>https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/</link>
-      <pubDate>Mon, 18 May 2020 10:42:02 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/</guid>
-      <description>Intro Feature toggles is an mechanism which allows you to control features and manage them within your application. For instance if you want to disable some functionality you can to that by changing some part of configuration without redeployment, rebuild etc. In this post I will show you how to configure it in a few easy steps in .NET Core web application and Azure. At the end you will find repository with example code which you can test it on your own.</description>
-    </item>
-    
-    <item>
-      <title>Live Unit Testing with .NET and Visual Studio</title>
-      <link>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</link>
-      <pubDate>Fri, 17 Apr 2020 10:23:10 +0200</pubDate>
-      
-      <guid>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</guid>
-      <description>A few days ago I was looking for something related to unit tests in the Microsoft documentation. I came to the tab titled &amp;lsquo;Live unit testing&amp;rsquo; and I decided to check what is it. It is quite interesting, because why I have to click to run unit tests when I made small changes in code? We have the live reload functionality in frontend or some mobile technologies to see changes in the interface, so the developer don&amp;rsquo;t have manually click F5 to refresh the page.</description>
-    </item>
-    
-    <item>
-      <title>Contact</title>
-      <link>https://wachulec.me/contact/</link>
-      <pubDate>Thu, 16 Apr 2020 07:53:12 +0200</pubDate>
-      
-      <guid>https://wachulec.me/contact/</guid>
-      <description>You can contact with me by writing an email: piotr (at) wachulec.me or by social media. All of my socials you can find on main page or on my profile on SocialsHub.
+Personal data is processed on this blog and cookies appear.</description></item><item><title>#30DEVSTORIES - my knowledge, thoughts and experience</title><link>https://wachulec.me/posts/30devstories/</link><pubDate>Mon, 15 Jun 2020 08:30:29 +0200</pubDate><guid>https://wachulec.me/posts/30devstories/</guid><description>Intro In the Polish IT Community, we had a great initiative on Instagram inspired by Guys from these two profiles: @kjendrzyca and @devenv.pl. Through 30 days we were sharing short Instagram stories related to our dev live - we shared our knowledge, our thoughts, and our experience. If you would like to check stories of other participants - here is a link: https://30devstories.crd.co/ or https://30devstories.pl/.
+In my Instagram stories, I shared much information related to C#/.</description></item><item><title>No code app with Azure Storage, Event Grid and Logic App</title><link>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</link><pubDate>Thu, 21 May 2020 09:11:37 +0200</pubDate><guid>https://wachulec.me/posts/no-code-app-with-azure-storage-event-grid-logic-app/</guid><description>Intro On Instagram I got the nomination for #Hot16CodeChallange where in 72 h I had to prepare some fancy application in 16 lines of code. I cheated a little bit, because I didn&amp;rsquo;t write any line of code! In my solution I used Azure Storage, Azure Event Grid and Azure Logic App.
+Business case Imagine that you have yours company site and you would like to hire new person to your company.</description></item><item><title>Feature toggles in .NET Core and Azure</title><link>https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/</link><pubDate>Mon, 18 May 2020 10:42:02 +0200</pubDate><guid>https://wachulec.me/posts/feature-toggles-in-dotnet-core-and-azure/</guid><description>Intro Feature toggles is an mechanism which allows you to control features and manage them within your application. For instance if you want to disable some functionality you can to that by changing some part of configuration without redeployment, rebuild etc. In this post I will show you how to configure it in a few easy steps in .NET Core web application and Azure. At the end you will find repository with example code which you can test it on your own.</description></item><item><title>Live Unit Testing with .NET and Visual Studio</title><link>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</link><pubDate>Fri, 17 Apr 2020 10:23:10 +0200</pubDate><guid>https://wachulec.me/posts/live-unit-testing-with-dotnet-and-visual-studio/</guid><description>A few days ago I was looking for something related to unit tests in the Microsoft documentation. I came to the tab titled &amp;lsquo;Live unit testing&amp;rsquo; and I decided to check what is it. It is quite interesting, because why I have to click to run unit tests when I made small changes in code? We have the live reload functionality in frontend or some mobile technologies to see changes in the interface, so the developer don&amp;rsquo;t have manually click F5 to refresh the page.</description></item><item><title>Contact</title><link>https://wachulec.me/contact/</link><pubDate>Thu, 16 Apr 2020 07:53:12 +0200</pubDate><guid>https://wachulec.me/contact/</guid><description>You can contact me by writing an email: piotr (at) wachulec.me or by social media. All of my socials you can find on the main page or on my profile on SocialsHub.
 If you are interested in my experience or you would like to work with me, here you can find my CV.
-NewsletterThank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://wachulec.me/about/</link>
-      <pubDate>Mon, 13 Apr 2020 20:14:27 +0200</pubDate>
-      
-      <guid>https://wachulec.me/about/</guid>
-      <description>Hi! My name is Piotr. Let me tell you something about me.
-
+Newsletter Thank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it.</description></item><item><title>About</title><link>https://wachulec.me/about/</link><pubDate>Mon, 13 Apr 2020 20:14:27 +0200</pubDate><guid>https://wachulec.me/about/</guid><description>Hi! My name is Piotr. Let me tell you something about me.
 Technically Currently C#/.NET developer with about 2 years of commercial experience in these technologies. Also associated with Microsoft Azure cloud for two years (I passed AZ-900 exam). Most projects used:
- .NET Core 2.1+ Azure App Service Azure SQL Database Azure Functions Storage Account Cosmos DB VMs SignalR Logic Apps Azure AD/Graph API Key Vault  I have experience also with other Azure services.</description>
-    </item>
-    
-  </channel>
-</rss>
+.NET Core 2.1+ Azure App Service Azure SQL Database Azure Functions Storage Account Cosmos DB VMs SignalR Logic Apps Azure AD/Graph API Key Vault I have experience also with other Azure services.</description></item></channel></rss>

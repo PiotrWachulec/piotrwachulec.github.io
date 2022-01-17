@@ -1,184 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Language" content="en">
-
-    <meta name="author" content="Piotr Wachulec">
-    <meta name="description" content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service.">
-    <meta name="keywords" content="blog,developer,architect,personal">
-
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="How to manage resources in the external tenant in Azure?"/>
-<meta name="twitter:description" content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service."/>
-
-    <meta property="og:title" content="How to manage resources in the external tenant in Azure?" />
-<meta property="og:description" content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/" />
-<meta property="article:published_time" content="2021-04-18T10:20:40+02:00" />
-<meta property="article:modified_time" content="2021-05-31T13:58:13+02:00" />
-
-
-    <title>
-  How to manage resources in the external tenant in Azure? · Piotr Wachulec
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=content-language content="en">
+<meta name=author content="Piotr Wachulec">
+<meta name=description content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service.">
+<meta name=keywords content="blog,developer,architect,personal">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="How to manage resources in the external tenant in Azure?">
+<meta name=twitter:description content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service.">
+<meta property="og:title" content="How to manage resources in the external tenant in Azure?">
+<meta property="og:description" content="Azure Lighthouse is a service which allows you to manage resources in the external Azure tenant directly from your tenant. In this article you will be able to see what is required and how to set up that service.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-18T10:20:40+02:00">
+<meta property="article:modified_time" content="2021-04-18T10:20:40+02:00">
+<title>
+How to manage resources in the external tenant in Azure? · Piotr Wachulec
 </title>
-
-    
-      <link rel="canonical" href="https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/">
-    
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
-
-    
-      
-      
-      <link rel="stylesheet" href="https://wachulec.me/css/coder.min.f01c647a0d25b40da992a37c3376291185eed8a50ced8c26cc2c0bcfe38c97df.css" integrity="sha256-8Bxkeg0ltA2pkqN8M3YpEYXu2KUM7YwmzCwLz&#43;OMl98=" crossorigin="anonymous" media="screen" />
-    
-
-    
-
-    
-      
-        
-        
-        <link rel="stylesheet" href="https://wachulec.me/css/coder-dark.min.126ad3988d46bdae6217a11105b53c9662bca05f39d42d3c0fb366919d334620.css" integrity="sha256-EmrTmI1Gva5iF6ERBbU8lmK8oF851C08D7NmkZ0zRiA=" crossorigin="anonymous" media="screen" />
-      
-    
-
-    
-      <link rel="stylesheet" href="https://wachulec.me/css/mailchimp_form.css" />
-    
-
-    
-
-    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://wachulec.me/images/favicon-16x16.png" sizes="16x16">
-
-    <link rel="apple-touch-icon" href="https://wachulec.me/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://wachulec.me/images/apple-touch-icon.png">
-
-    
-
-    <meta name="generator" content="Hugo 0.74.1" />
-  </head>
-
-  
-  
-    
-  
-  <body class="colorscheme-dark"
-        onload=""
-  >
-    
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
+<link rel=canonical href=https://wachulec.me/posts/how-to-manage-resources-in-the-external-tenant-in-azure/>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin=anonymous>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin=anonymous>
+<link rel=stylesheet href=https://wachulec.me/css/coder.min.f01c647a0d25b40da992a37c3376291185eed8a50ced8c26cc2c0bcfe38c97df.css integrity="sha256-8Bxkeg0ltA2pkqN8M3YpEYXu2KUM7YwmzCwLz+OMl98=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=https://wachulec.me/css/coder-dark.min.126ad3988d46bdae6217a11105b53c9662bca05f39d42d3c0fb366919d334620.css integrity="sha256-EmrTmI1Gva5iF6ERBbU8lmK8oF851C08D7NmkZ0zRiA=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=https://wachulec.me/css/mailchimp_form.css>
+<link rel=icon type=image/png href=https://wachulec.me/images/favicon-32x32.png sizes=32x32>
+<link rel=icon type=image/png href=https://wachulec.me/images/favicon-16x16.png sizes=16x16>
+<link rel=apple-touch-icon href=https://wachulec.me/images/apple-touch-icon.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://wachulec.me/images/apple-touch-icon.png>
+<meta name=generator content="Hugo 0.92.0">
+</head>
+<body class=colorscheme-dark>
+<div class=float-container>
+<a id=dark-mode-toggle class=colorscheme-toggle>
+<i class="fa fa-adjust fa-fw" aria-hidden=true></i>
+</a>
 </div>
-
-
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="https://wachulec.me/">
-      Piotr Wachulec
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="https://wachulec.me/about/">About</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="https://wachulec.me/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="https://wachulec.me/contact/">Contact</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="https://wachulec.me/privacy/">Privacy</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
+<main class=wrapper>
+<nav class=navigation>
+<section class=container>
+<a class=navigation-title href=https://wachulec.me/>
+Piotr Wachulec
+</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle>
+<i class="fa fa-bars fa-fw" aria-hidden=true></i>
+</label>
+<ul class=navigation-list>
+<li class=navigation-item>
+<a class=navigation-link href=https://wachulec.me/about/>About</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=https://wachulec.me/posts/>Blog</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=https://wachulec.me/contact/>Contact</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=https://wachulec.me/privacy/>Privacy</a>
+</li>
+</ul>
+</section>
 </nav>
-
-
-      <div class="content">
-        
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">How to manage resources in the external tenant in Azure?</h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-              <time datetime='2021-04-18T10:20:40&#43;02:00'>
-                April 18, 2021
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fa fa-clock-o" aria-hidden="true"></i>
-              6-minute read
-            </span>
-          </div>
-          <div class="authors">
-    <i class="fa fa-user" aria-hidden="true"></i>
-      <a href="https://wachulec.me/authors/piotr-wachulec/">Piotr Wachulec</a></div>
-          <div class="categories">
-  <i class="fa fa-folder" aria-hidden="true"></i>
-    <a href="https://wachulec.me/categories/azure/">Azure</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/categories/administration/">Administration</a></div>
-
-          <div class="tags">
-  <i class="fa fa-tag" aria-hidden="true"></i>
-    <a href="https://wachulec.me/tags/arm/">arm</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/bicep/">bicep</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/management/">management</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/cloud/">cloud</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/azure/">azure</a>
-      <span class="separator">•</span>
-    <a href="https://wachulec.me/tags/lighthouse/">lighthouse</a></div>
-
-        </div>
-      </header>
-
-      <div>
-        
-        <h1 id="the-case">The case</h1>
+<div class=content>
+<section class="container post">
+<article>
+<header>
+<div class=post-title>
+<h1 class=title>How to manage resources in the external tenant in Azure?</h1>
+</div>
+<div class=post-meta>
+<div class=date>
+<span class=posted-on>
+<i class="fa fa-calendar" aria-hidden=true></i>
+<time datetime=2021-04-18T10:20:40+02:00>
+April 18, 2021
+</time>
+</span>
+<span class=reading-time>
+<i class="fa fa-clock-o" aria-hidden=true></i>
+6-minute read
+</span>
+</div>
+<div class=authors>
+<i class="fa fa-user" aria-hidden=true></i>
+<a href=https://wachulec.me/authors/piotr-wachulec/>Piotr Wachulec</a></div>
+<div class=categories>
+<i class="fa fa-folder" aria-hidden=true></i>
+<a href=https://wachulec.me/categories/azure/>Azure</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/categories/administration/>Administration</a></div>
+<div class=tags>
+<i class="fa fa-tag" aria-hidden=true></i>
+<a href=https://wachulec.me/tags/arm/>arm</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/tags/bicep/>bicep</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/tags/management/>management</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/tags/cloud/>cloud</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/tags/azure/>azure</a>
+<span class=separator>•</span>
+<a href=https://wachulec.me/tags/lighthouse/>lighthouse</a></div>
+</div>
+</header>
+<div>
+<h1 id=the-case>The case</h1>
 <p>You want to manage resources in other tenants without additional workload around that like accounts creation for you and your teammates in the destination Azure tenant or disabling those accounts if someone leaves the team. Is there any solution for that?</p>
 <p>The answer is: yes! And it is called <strong>Azure Lighthouse</strong>.</p>
 <p>From docs:</p>
 <blockquote>
-<p>Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants. ~<a href="https://docs.microsoft.com/en-us/azure/lighthouse/overview">What is Azure Lighthouse?</a></p>
+<p>Azure Lighthouse enables cross- and multi-tenant management, allowing for higher automation, scalability, and enhanced governance across resources and tenants. ~<a href=https://docs.microsoft.com/en-us/azure/lighthouse/overview>What is Azure Lighthouse?</a></p>
 </blockquote>
-<h1 id="how-does-it-work">How does it work?</h1>
+<h1 id=how-does-it-work>How does it work?</h1>
 <p>Azure Lighthouse enables managing resources in another tenant directly from your &lsquo;home&rsquo; tenant. You can define with that which users and/or Active Directory <strong>Security</strong> groups should have access to which resources and with which roles.</p>
-<h1 id="requirements">Requirements</h1>
+<h1 id=requirements>Requirements</h1>
 <p>To set up the Azure Lighthouse solution, you have to fulfill some requirements and gather a bunch of information. The full list you can find here:</p>
 <ul>
 <li>Your tenant ID</li>
@@ -186,137 +124,137 @@
 <li>List of subscription IDs and/or resource group IDs to which you have to have access</li>
 <li>List of users and/or Active Directory groups which you want to assign to manage customer environments - <strong>IMPORTANT</strong>: AD groups have to be <strong>Security</strong> groups!</li>
 <li>List of roles and permissions (with their IDs) which you want to assign</li>
-<li>Someone with non-guest account in customer&rsquo;s tenant and <code>Microsoft.Authorization/roleAssignments/write</code> permission - it is required to create assignment (<a href="https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#deploy-the-azure-resource-manager-templates">Deploy the Azure Resource Manager templates</a>)</li>
+<li>Someone with non-guest account in customer&rsquo;s tenant and <code>Microsoft.Authorization/roleAssignments/write</code> permission - it is required to create assignment (<a href=https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#deploy-the-azure-resource-manager-templates>Deploy the Azure Resource Manager templates</a>)</li>
 <li>Something called <code>mspOfferName</code> and <code>mspOfferDescription</code> - the first one defines the connection between both tenants and their resources. <strong>IMPORTANT: You can&rsquo;t have multiple assignments at the same scope with the same <code>mspOfferName</code>.</strong></li>
 </ul>
-<h1 id="how-to-onboard-the-customer">How to onboard the customer?</h1>
-<p>If you gathered all of the above requirements, on <a href="https://github.com/Azure/Azure-Lighthouse-samples">Github</a> you can find example ARM templates that allow you to onboard. You have to deploy prepared and fulfilled templates to each subscription separately.</p>
-<h1 id="example">Example</h1>
-<p>For preparing example I will use the template from the official <a href="https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer">docs</a>:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+<h1 id=how-to-onboard-the-customer>How to onboard the customer?</h1>
+<p>If you gathered all of the above requirements, on <a href=https://github.com/Azure/Azure-Lighthouse-samples>Github</a> you can find example ARM templates that allow you to onboard. You have to deploy prepared and fulfilled templates to each subscription separately.</p>
+<h1 id=example>Example</h1>
+<p>For preparing example I will use the template from the official <a href=https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer>docs</a>:</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#&#34;</span>,
-    <span style="color:#f92672">&#34;contentVersion&#34;</span>: <span style="color:#e6db74">&#34;1.0.0.0&#34;</span>,
-    <span style="color:#f92672">&#34;parameters&#34;</span>: {
-        <span style="color:#f92672">&#34;mspOfferName&#34;</span>: {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>,
-            <span style="color:#f92672">&#34;metadata&#34;</span>: {
-                <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Specify a unique name for your offer&#34;</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+    <span style=color:#f92672>&#34;$schema&#34;</span>: <span style=color:#e6db74>&#34;https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#&#34;</span>,
+    <span style=color:#f92672>&#34;contentVersion&#34;</span>: <span style=color:#e6db74>&#34;1.0.0.0&#34;</span>,
+    <span style=color:#f92672>&#34;parameters&#34;</span>: {
+        <span style=color:#f92672>&#34;mspOfferName&#34;</span>: {
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span>,
+            <span style=color:#f92672>&#34;metadata&#34;</span>: {
+                <span style=color:#f92672>&#34;description&#34;</span>: <span style=color:#e6db74>&#34;Specify a unique name for your offer&#34;</span>
             },
-            <span style="color:#f92672">&#34;defaultValue&#34;</span>: <span style="color:#e6db74">&#34;&lt;to be filled out by MSP&gt; Specify a title for your offer&#34;</span>
+            <span style=color:#f92672>&#34;defaultValue&#34;</span>: <span style=color:#e6db74>&#34;&lt;to be filled out by MSP&gt; Specify a title for your offer&#34;</span>
 
         },
-        <span style="color:#f92672">&#34;mspOfferDescription&#34;</span>: {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>,
-            <span style="color:#f92672">&#34;metadata&#34;</span>: {
-                <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Name of the Managed Service Provider offering&#34;</span>
+        <span style=color:#f92672>&#34;mspOfferDescription&#34;</span>: {
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span>,
+            <span style=color:#f92672>&#34;metadata&#34;</span>: {
+                <span style=color:#f92672>&#34;description&#34;</span>: <span style=color:#e6db74>&#34;Name of the Managed Service Provider offering&#34;</span>
             },
-            <span style="color:#f92672">&#34;defaultValue&#34;</span>: <span style="color:#e6db74">&#34;&lt;to be filled out by MSP&gt; Provide a brief description of your offer&#34;</span>
+            <span style=color:#f92672>&#34;defaultValue&#34;</span>: <span style=color:#e6db74>&#34;&lt;to be filled out by MSP&gt; Provide a brief description of your offer&#34;</span>
         },
-        <span style="color:#f92672">&#34;managedByTenantId&#34;</span>: {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>,
-            <span style="color:#f92672">&#34;metadata&#34;</span>: {
-                <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Specify the tenant id of the Managed Service Provider&#34;</span>
+        <span style=color:#f92672>&#34;managedByTenantId&#34;</span>: {
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span>,
+            <span style=color:#f92672>&#34;metadata&#34;</span>: {
+                <span style=color:#f92672>&#34;description&#34;</span>: <span style=color:#e6db74>&#34;Specify the tenant id of the Managed Service Provider&#34;</span>
             },
-            <span style="color:#f92672">&#34;defaultValue&#34;</span>: <span style="color:#e6db74">&#34;&lt;to be filled out by MSP&gt; Provide your tenant id&#34;</span>
+            <span style=color:#f92672>&#34;defaultValue&#34;</span>: <span style=color:#e6db74>&#34;&lt;to be filled out by MSP&gt; Provide your tenant id&#34;</span>
         },
-        <span style="color:#f92672">&#34;authorizations&#34;</span>: {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;array&#34;</span>,
-            <span style="color:#f92672">&#34;metadata&#34;</span>: {
-                <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider&#39;s Active Directory and the principalIdDisplayName is visible to customers.&#34;</span>
+        <span style=color:#f92672>&#34;authorizations&#34;</span>: {
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;array&#34;</span>,
+            <span style=color:#f92672>&#34;metadata&#34;</span>: {
+                <span style=color:#f92672>&#34;description&#34;</span>: <span style=color:#e6db74>&#34;Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider&#39;s Active Directory and the principalIdDisplayName is visible to customers.&#34;</span>
             }
         }              
     },
-    <span style="color:#f92672">&#34;variables&#34;</span>: {
-        <span style="color:#f92672">&#34;mspRegistrationName&#34;</span>: <span style="color:#e6db74">&#34;[guid(parameters(&#39;mspOfferName&#39;))]&#34;</span>,
-        <span style="color:#f92672">&#34;mspAssignmentName&#34;</span>: <span style="color:#e6db74">&#34;[guid(parameters(&#39;mspOfferName&#39;))]&#34;</span>
+    <span style=color:#f92672>&#34;variables&#34;</span>: {
+        <span style=color:#f92672>&#34;mspRegistrationName&#34;</span>: <span style=color:#e6db74>&#34;[guid(parameters(&#39;mspOfferName&#39;))]&#34;</span>,
+        <span style=color:#f92672>&#34;mspAssignmentName&#34;</span>: <span style=color:#e6db74>&#34;[guid(parameters(&#39;mspOfferName&#39;))]&#34;</span>
     },
-    <span style="color:#f92672">&#34;resources&#34;</span>: [
+    <span style=color:#f92672>&#34;resources&#34;</span>: [
         {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Microsoft.ManagedServices/registrationDefinitions&#34;</span>,
-            <span style="color:#f92672">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;2019-09-01&#34;</span>,
-            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;[variables(&#39;mspRegistrationName&#39;)]&#34;</span>,
-            <span style="color:#f92672">&#34;properties&#34;</span>: {
-                <span style="color:#f92672">&#34;registrationDefinitionName&#34;</span>: <span style="color:#e6db74">&#34;[parameters(&#39;mspOfferName&#39;)]&#34;</span>,
-                <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;[parameters(&#39;mspOfferDescription&#39;)]&#34;</span>,
-                <span style="color:#f92672">&#34;managedByTenantId&#34;</span>: <span style="color:#e6db74">&#34;[parameters(&#39;managedByTenantId&#39;)]&#34;</span>,
-                <span style="color:#f92672">&#34;authorizations&#34;</span>: <span style="color:#e6db74">&#34;[parameters(&#39;authorizations&#39;)]&#34;</span>
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;Microsoft.ManagedServices/registrationDefinitions&#34;</span>,
+            <span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;2019-09-01&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;[variables(&#39;mspRegistrationName&#39;)]&#34;</span>,
+            <span style=color:#f92672>&#34;properties&#34;</span>: {
+                <span style=color:#f92672>&#34;registrationDefinitionName&#34;</span>: <span style=color:#e6db74>&#34;[parameters(&#39;mspOfferName&#39;)]&#34;</span>,
+                <span style=color:#f92672>&#34;description&#34;</span>: <span style=color:#e6db74>&#34;[parameters(&#39;mspOfferDescription&#39;)]&#34;</span>,
+                <span style=color:#f92672>&#34;managedByTenantId&#34;</span>: <span style=color:#e6db74>&#34;[parameters(&#39;managedByTenantId&#39;)]&#34;</span>,
+                <span style=color:#f92672>&#34;authorizations&#34;</span>: <span style=color:#e6db74>&#34;[parameters(&#39;authorizations&#39;)]&#34;</span>
             }
         },
         {
-            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Microsoft.ManagedServices/registrationAssignments&#34;</span>,
-            <span style="color:#f92672">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;2019-09-01&#34;</span>,
-            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;[variables(&#39;mspAssignmentName&#39;)]&#34;</span>,
-            <span style="color:#f92672">&#34;dependsOn&#34;</span>: [
-                <span style="color:#e6db74">&#34;[resourceId(&#39;Microsoft.ManagedServices/registrationDefinitions/&#39;, variables(&#39;mspRegistrationName&#39;))]&#34;</span>
+            <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;Microsoft.ManagedServices/registrationAssignments&#34;</span>,
+            <span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;2019-09-01&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;[variables(&#39;mspAssignmentName&#39;)]&#34;</span>,
+            <span style=color:#f92672>&#34;dependsOn&#34;</span>: [
+                <span style=color:#e6db74>&#34;[resourceId(&#39;Microsoft.ManagedServices/registrationDefinitions/&#39;, variables(&#39;mspRegistrationName&#39;))]&#34;</span>
             ],
-            <span style="color:#f92672">&#34;properties&#34;</span>: {
-                <span style="color:#f92672">&#34;registrationDefinitionId&#34;</span>: <span style="color:#e6db74">&#34;[resourceId(&#39;Microsoft.ManagedServices/registrationDefinitions/&#39;, variables(&#39;mspRegistrationName&#39;))]&#34;</span>
+            <span style=color:#f92672>&#34;properties&#34;</span>: {
+                <span style=color:#f92672>&#34;registrationDefinitionId&#34;</span>: <span style=color:#e6db74>&#34;[resourceId(&#39;Microsoft.ManagedServices/registrationDefinitions/&#39;, variables(&#39;mspRegistrationName&#39;))]&#34;</span>
             }
         }
     ]
@@ -324,53 +262,53 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>with parameters file:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentParameters.json#&#34;</span>,
-    <span style="color:#f92672">&#34;contentVersion&#34;</span>: <span style="color:#e6db74">&#34;1.0.0.0&#34;</span>,
-    <span style="color:#f92672">&#34;parameters&#34;</span>: {
-        <span style="color:#f92672">&#34;mspOfferName&#34;</span>: {
-            <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;Test PW Lighthouse&#34;</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+    <span style=color:#f92672>&#34;$schema&#34;</span>: <span style=color:#e6db74>&#34;https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentParameters.json#&#34;</span>,
+    <span style=color:#f92672>&#34;contentVersion&#34;</span>: <span style=color:#e6db74>&#34;1.0.0.0&#34;</span>,
+    <span style=color:#f92672>&#34;parameters&#34;</span>: {
+        <span style=color:#f92672>&#34;mspOfferName&#34;</span>: {
+            <span style=color:#f92672>&#34;value&#34;</span>: <span style=color:#e6db74>&#34;Test PW Lighthouse&#34;</span>
         },
-        <span style="color:#f92672">&#34;mspOfferDescription&#34;</span>: {
-            <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;Test PW Lighthouse&#34;</span>
+        <span style=color:#f92672>&#34;mspOfferDescription&#34;</span>: {
+            <span style=color:#f92672>&#34;value&#34;</span>: <span style=color:#e6db74>&#34;Test PW Lighthouse&#34;</span>
         },
-        <span style="color:#f92672">&#34;managedByTenantId&#34;</span>: {
-            <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;11111111-1111-1111-1111-111111111111&#34;</span>
+        <span style=color:#f92672>&#34;managedByTenantId&#34;</span>: {
+            <span style=color:#f92672>&#34;value&#34;</span>: <span style=color:#e6db74>&#34;11111111-1111-1111-1111-111111111111&#34;</span>
         },
-        <span style="color:#f92672">&#34;authorizations&#34;</span>: {
-            <span style="color:#f92672">&#34;value&#34;</span>: [
+        <span style=color:#f92672>&#34;authorizations&#34;</span>: {
+            <span style=color:#f92672>&#34;value&#34;</span>: [
                 {
-                    <span style="color:#f92672">&#34;principalId&#34;</span>: <span style="color:#e6db74">&#34;22222222-2222-2222-2222-222222222222&#34;</span>,
-                    <span style="color:#f92672">&#34;roleDefinitionId&#34;</span>: <span style="color:#e6db74">&#34;b24988ac-6180-42a0-ab88-20f7382dd24c&#34;</span>,
-                    <span style="color:#f92672">&#34;principalIdDisplayName&#34;</span>: <span style="color:#e6db74">&#34;PW MC&#34;</span>
+                    <span style=color:#f92672>&#34;principalId&#34;</span>: <span style=color:#e6db74>&#34;22222222-2222-2222-2222-222222222222&#34;</span>,
+                    <span style=color:#f92672>&#34;roleDefinitionId&#34;</span>: <span style=color:#e6db74>&#34;b24988ac-6180-42a0-ab88-20f7382dd24c&#34;</span>,
+                    <span style=color:#f92672>&#34;principalIdDisplayName&#34;</span>: <span style=color:#e6db74>&#34;PW MC&#34;</span>
                 }
             ]
         }
@@ -379,239 +317,163 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>I translated the above template to Bicep - it&rsquo;s much easier to read and edit for me:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">@description<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Specify a unique name for your offer&#39;</span><span style="color:#f92672">)</span>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>@description<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;Specify a unique name for your offer&#39;</span><span style=color:#f92672>)</span>
 param mspOfferName string
 
-@description<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Name of the Managed Service Provider offering&#39;</span><span style="color:#f92672">)</span>
+@description<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;Name of the Managed Service Provider offering&#39;</span><span style=color:#f92672>)</span>
 param mspOfferDescription string
 
-@description<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Specify the tenant id of the Managed Service Provider&#39;</span><span style="color:#f92672">)</span>
+@description<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;Specify the tenant id of the Managed Service Provider&#39;</span><span style=color:#f92672>)</span>
 param managedByTenantId string
 
-@description<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider`s Active Directory and the principalIdDisplayName is visible to customers.&#39;</span><span style="color:#f92672">)</span>
+@description<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider`s Active Directory and the principalIdDisplayName is visible to customers.&#39;</span><span style=color:#f92672>)</span>
 param authorizations array
 
-var mspRegistrationName <span style="color:#f92672">=</span> guid<span style="color:#f92672">(</span>mspOfferName<span style="color:#f92672">)</span>
-var mspAssignmentName <span style="color:#f92672">=</span> guid<span style="color:#f92672">(</span>mspOfferName<span style="color:#f92672">)</span>
+var mspRegistrationName <span style=color:#f92672>=</span> guid<span style=color:#f92672>(</span>mspOfferName<span style=color:#f92672>)</span>
+var mspAssignmentName <span style=color:#f92672>=</span> guid<span style=color:#f92672>(</span>mspOfferName<span style=color:#f92672>)</span>
 
-targetScope <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;subscription&#39;</span>
+targetScope <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;subscription&#39;</span>
 
-resource regDefinintion <span style="color:#e6db74">&#39;Microsoft.ManagedServices/registrationDefinitions@2019-09-01&#39;</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+resource regDefinintion <span style=color:#e6db74>&#39;Microsoft.ManagedServices/registrationDefinitions@2019-09-01&#39;</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   name: mspRegistrationName
-  properties: <span style="color:#f92672">{</span>
+  properties: <span style=color:#f92672>{</span>
     registrationDefinitionName: mspOfferName
     description: mspOfferDescription
     managedByTenantId: managedByTenantId
     authorizations: authorizations
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+  <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
 
-resource regAssignment <span style="color:#e6db74">&#39;Microsoft.ManagedServices/registrationAssignments@2019-09-01&#39;</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+resource regAssignment <span style=color:#e6db74>&#39;Microsoft.ManagedServices/registrationAssignments@2019-09-01&#39;</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
   name: mspAssignmentName
-  properties: <span style="color:#f92672">{</span>
+  properties: <span style=color:#f92672>{</span>
     registrationDefinitionId: regDefinintion.id
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+  <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The Bicep file can be used with the same parameters file as the classic ARM template.</p>
 <p>For test purposes, I used two different Azure tenants. I &lsquo;home&rsquo; tenant I created AD Security group called &lsquo;<strong>PW MC</strong>&rsquo;. I wanted to give to chosen subscription the Contributor rights for &lsquo;<strong>PW MC</strong>&rsquo; AD group, so I deployed the above template with the Azure CLI:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az deployment sub create --location WestEurope --template-file ./lighthouse.bicep --parameters lighthouse.parameters.json
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>az deployment sub create --location WestEurope --template-file ./lighthouse.bicep --parameters lighthouse.parameters.json
 </code></pre></td></tr></table>
 </div>
 </div><p>Previously I logged into the tenant with <code>az login --tenant</code> command.</p>
-<h1 id="effect">Effect</h1>
+<h1 id=effect>Effect</h1>
 <p>The effect should be visible in two places, in both tenants. In the customer tenant when we will go to the <strong>Service providers</strong> page, we will able to see something like on the screenshot below:</p>
-<p><img src="https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/customer-lighthouse.png" alt="Service providers in Customer&rsquo;s tenant" /></p>
+<p><img src=https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/customer-lighthouse.png alt="Service providers in Customer&rsquo;s tenant"></p>
 <p>and in the &lsquo;home&rsquo; tenant when we will visit the <strong>My customers</strong> page:</p>
-<p><img src="https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/service-lighthouse.png" alt="My customers page in home tenant" /></p>
+<p><img src=https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/service-lighthouse.png alt="My customers page in home tenant"></p>
 <p>If we click on &lsquo;Default directory&rsquo;:</p>
-<p><img src="https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/service-lighthouse-2.png" alt="Subscription details" /></p>
+<p><img src=https://wachulec.me/images/posts/2021-04-19-how-to-manage-resources-in-the-external-tenant-in-azure/service-lighthouse-2.png alt="Subscription details"></p>
 <p>Then you can click on the subscription name and do whatever you want with the resources.</p>
-<h1 id="summary">Summary</h1>
+<h1 id=summary>Summary</h1>
 <p>You can see that implementing Azure Lighthouse is quite easy and reduce management concerns. And what is the most important - it is free!</p>
 <h3>Newsletter</h3>
 <p>Thank you for visiting my website. I hope you enjoyed content which I prepared and learned something valuable from it. If you want to be informed about my next entries or occasionally get a message with a collection of some interesting links, please subscribe to my newsletter. I will be extremely pleased if you do this and join my community!</p>
-
-<form action="https://wachulec.us4.list-manage.com/subscribe/post?u=2324c62a24ba49bf4fe638e7a&amp;id=d8fba7ef5c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" validate>
-    <ul class="form-style-1">
-        <li>
-            <label for="mce-FNAME">Name <span class="required">*</span></label>
-            <input type="text" name="FNAME" value="" class="field-long" />
-        </li>
-        <li>
-            <label for="mce-EMAIL">Email <span class="required">*</span></label>
-            <input type="email" name="EMAIL" value="" class="field-long" />
-        </li>
-        <li style="display:none">
-			<input type="checkbox" value="2" name="group[70044][2]" id="mce-group[70044]-70044-0" checked>
-			<label for="mce-group[70044]-70044-0">BlogPost</label>
-        </li>
-        <li>
-            <fieldset class="mc_fieldset gdprRequired mc-field-group" name="interestgroup_field" style="display: none;">
-                <label class="checkbox subfield" for="gdpr_43552">
-                    <input type="checkbox" id="gdpr_43552" name="gdpr[43552]" value="Y" class="av-checkbox " checked><span>Send me emails!</span>
-                </label>
-            </fieldset>
-            <p><small>By clicking button below you agree to send you news from my blog, about my products and services. Above data are stored in Mailchimp and I do not share them to anyone. More info you can find in <a href="//wachulec.me/privacy/"> privacy policy.</a></small></p>
-        </li>
-        <li>
-            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe">
-        </li>
-        <li>
-            <div id="mce-responses" class="clear">
-                <div class="response" id="mce-error-response" style="display:none"></div>
-                <div class="response" id="mce-success-response" style="display:none"></div>
-            </div>
-            
-            <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input type="text" name="b_2324c62a24ba49bf4fe638e7a_d8fba7ef5c" tabindex="-1" value="">
-            </div>
-        </li>
-    </ul>        
+<form action="https://wachulec.us4.list-manage.com/subscribe/post?u=2324c62a24ba49bf4fe638e7a&id=d8fba7ef5c" method=post id=mc-embedded-subscribe-form name=mc-embedded-subscribe-form target=_blank validate>
+<ul class=form-style-1>
+<li>
+<label for=mce-FNAME>Name <span class=required>*</span></label>
+<input type=text name=FNAME class=field-long>
+</li>
+<li>
+<label for=mce-EMAIL>Email <span class=required>*</span></label>
+<input type=email name=EMAIL class=field-long>
+</li>
+<li style=display:none>
+<input type=checkbox value=2 name=group[70044][2] id=mce-group[70044]-70044-0 checked>
+<label for=mce-group[70044]-70044-0>BlogPost</label>
+</li>
+<li>
+<fieldset class="mc_fieldset gdprRequired mc-field-group" name=interestgroup_field style=display:none>
+<label class="checkbox subfield" for=gdpr_43552>
+<input type=checkbox id=gdpr_43552 name=gdpr[43552] value=Y class=av-checkbox checked><span>Send me emails!</span>
+</label>
+</fieldset>
+<p><small>By clicking button below you agree to send you news from my blog, about my products and services. Above data are stored in Mailchimp and I do not share them to anyone. More info you can find in <a href=//wachulec.me/privacy/> privacy policy.</a></small></p>
+</li>
+<li>
+<input type=submit value=Subscribe name=subscribe id=mc-embedded-subscribe>
+</li>
+<li>
+<div id=mce-responses class=clear>
+<div class=response id=mce-error-response style=display:none></div>
+<div class=response id=mce-success-response style=display:none></div>
+</div>
+<div style=position:absolute;left:-5000px aria-hidden=true>
+<input type=text name=b_2324c62a24ba49bf4fe638e7a_d8fba7ef5c tabindex=-1>
+</div>
+</li>
+</ul>
 </form>
-
-<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-<script type='text/javascript'>
-(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';}(jQuery));
-var $mcj = jQuery.noConflict(true);
-</script>
-
-      </div>
-
-
-      <footer>
-        
-
-
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "wachulec-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-      </div>
-
-      
-  <footer class="footer">
-    <section class="container">
-      
-        <p>There are no problems, there are only challenges.</p>
-      
-      
-        ©
-        
-          2020 -
-        
-        2021
-         Piotr Wachulec 
-      
-      
-         · 
-        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
-      
-      
-    </section>
-  </footer>
-
-
-    </main>
-
-    
-      
-        
-        <script src="https://wachulec.me/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
-      
-    
-
-    
-      <script src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?forceLang=en&amp;theme=grey&amp;tracking=1&amp;thirdparty=1&amp;always=1&amp;showPolicyLink=1&amp;remember=English&amp;privacyPage=https%3A%2F%2Fwachulec.me%2Fprivacy%2F"></script>
-    
-
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-163491252-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-
-
-    
-
-    
-
-    
-  </body>
-
+<script type=text/javascript src=//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js></script>
+<script type=text/javascript>(function(a){window.fnames=new Array,window.ftypes=new Array,fnames[0]='EMAIL',ftypes[0]='email',fnames[1]='FNAME',ftypes[1]='text'})(jQuery);var $mcj=jQuery.noConflict(!0)</script>
+</div>
+<footer>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//wachulec-me.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</footer>
+</article>
+</section>
+</div>
+<footer class=footer>
+<section class=container>
+<p>There are no problems, there are only challenges.</p>
+©
+2020 -
+2022
+Piotr Wachulec
+·
+Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.
+</section>
+</footer>
+</main>
+<script src=https://wachulec.me/js/dark-mode.min.aee9c8a464eb7b3534c7110f7c5e169e7039e2fd92710e0626d451d6725af137.js></script>
+<script src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?forceLang=en&theme=grey&tracking=1&thirdparty=1&always=1&showPolicyLink=1&remember=English&privacyPage=https%3A%2F%2Fwachulec.me%2Fprivacy%2F"></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-163491252-1','auto'),ga('send','pageview'))</script>
+</body>
 </html>
